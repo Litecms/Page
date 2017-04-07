@@ -242,6 +242,17 @@ class PageTableSeeder extends Seeder
                 'order'       => 8,
                 'status'      => 1,
             ],
+            [
+                'parent_id'   => 5,
+                'key'         => null,
+                'url'         => 'about-us.html',
+                'name'        => 'About Us',
+                'description' => null,
+                'icon'        => null,
+                'target'      => null,
+                'order'       => 8,
+                'status'      => 1,
+            ],
         ]);
 
         DB::table('permissions')->insert([
