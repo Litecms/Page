@@ -1,0 +1,22 @@
+{
+    "name": "litecms/page",
+    "description": "Page package for Lavalite",
+    "keywords": ["lavalite", "page"],
+    "license": "MIT",
+    "type": "lavalite-package",
+    "homepage": "https://github.com/Litecms/Page",
+    "authors": [
+        {
+            "name": "Renfos Technologies Pvt. Ltd.",
+            "email": "info@renfos.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.6.4"
+    },
+    "autoload": {
+        "psr-4": { 
+            "Litecms\\Page\\": "" 
+        }
+    }
+}
