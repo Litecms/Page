@@ -24,19 +24,17 @@ And also add it to alias
 
 Use the below commands for publishing
 
-Migration and seeds
-
-    php artisan vendor:publish --provider="Litecms\Page\Providers\PageServiceProvider" --tag="migrate"
-    php artisan vendor:publish --provider="Litecms\Page\Providers\PageServiceProvider" --tag="seeds"
-
 Configuration
 
     php artisan vendor:publish --provider="Litecms\Page\Providers\PageServiceProvider" --tag="config"
 
+Language
+
+    php artisan vendor:publish --provider="Litecms\Page\Providers\PageServiceProvider" --tag="lang"
+
 Views
 
-    php artisan vendor:publish --provider="Litecms\Page\Providers\PageServiceProvider" --tag="view-public"
-    php artisan vendor:publish --provider="Litecms\Page\Providers\PageServiceProvider" --tag="view-admin"
+    php artisan vendor:publish --provider="Litecms\Page\Providers\PageServiceProvider" --tag="view"
 
 
 You are done!
