@@ -19,10 +19,14 @@ class PageServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
+        // Load views
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'page');
 
+        // Load translation
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'page');
+
+        // Load migrations
+        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 
         $this->publishResources();
     }
@@ -72,12 +76,6 @@ class PageServiceProvider extends ServiceProvider
 
         // Publish language files
         $this->publishes([__DIR__.'/../public' => base_path('public')], 'public');
-
-        // Publish migrations
-        $this->publishes([__DIR__.'/../database/migrations' => base_path('database/migrations')], 'migrations');
-
-        // Publish seeds
-        $this->publishes([__DIR__.'/../database/seeds' => base_path('database/seeds')], 'seeds');
     }
 
 }

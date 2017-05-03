@@ -1,5 +1,7 @@
 <?php
 
+namespace Litecms;
+
 use Illuminate\Database\Seeder;
 
 class PageTableSeeder extends Seeder
