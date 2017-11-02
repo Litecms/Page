@@ -2,9 +2,9 @@
 
 namespace Litecms\Page\Http\Controllers;
 
-use App\Http\Controllers\PublicController as PublicController;
+use App\Http\Controllers\PublicController as BaseController;
 
-class PagePublicController extends PublicController
+class PagePublicController extends BaseController
 {
     /**
      * Constructor.
@@ -15,8 +15,8 @@ class PagePublicController extends PublicController
      */
     public function __construct(\Litecms\Page\Interfaces\PageRepositoryInterface $page)
     {
-        $this->model = $page;
         parent::__construct();
+        $this->model = $page;
     }
 
     /**
@@ -36,16 +36,14 @@ class PagePublicController extends PublicController
         }
 
         //Set theme variables
-        $this->theme->setTitle(strip_tags($page->title));
-        $this->theme->setKeywords(strip_tags($page->keyword));
-        $this->theme->setDescription(strip_tags($page->description));
-
-        // Get view
         $view = $page->view;
         $view = view()->exists('page::public.' . $view) ? $view : 'page';
 
-        // display page
-        return $this->theme->of('page::public.' . $view, compact('page'))->render();
+        return $this->response->title(strip_tags($page->title))
+            ->view('page::public.' . $view)
+            ->data(compact('page'))
+            ->output();
+
     }
 
 }

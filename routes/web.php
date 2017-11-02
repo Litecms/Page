@@ -1,16 +1,9 @@
 <?php
 
 // Admin routes for module
-Route::group(['prefix' => trans_setlocale() . '/admin/page'], function () {
-    Route::resource('page', 'PageAdminController');
-});
-
-// User routes for module
-Route::group(['prefix' => trans_setlocale() . '/user/page'], function () {
-    Route::resource('page', 'PageUserController');
+Route::group(['prefix' => set_route_guard('web') . '/page'], function () {
+    Route::resource('page', 'PageResourceController');
 });
 
 // Public routes for module
-Route::group(['prefix' => trans_setlocale()], function () {
-    Route::get('/{slug}.html', 'PagePublicController@getPage');
-});
+Route::get('/{slug}.html', 'PagePublicController@getPage');

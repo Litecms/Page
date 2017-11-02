@@ -9,7 +9,7 @@
                 {!! Form::textarea('content')
                 -> label(trans('page::page.label.content'))
                 -> value(e($page['content']))
-                -> dataUpload(trans_url($page->getUploadURL('content')))
+                -> dataUpload(url($page->getUploadURL('content')))
                 -> addClass('html-editor')
                 -> placeholder(trans('page::page.placeholder.content'))
                 !!}
@@ -84,4 +84,42 @@
                     !!}
                 </div>
             </div>
-          
+            @if ($mode == 'create')
+            <div class="tab-pane row" id="images">
+                <div class="form-group">
+                    <label for="images" class="control-label col-lg-12 col-sm-12 text-left">
+                        {{trans('page::page.label.images') }}
+                    </label>
+                    <div class='col-lg-6 col-sm-12'>
+                        {!! $page->files('images')
+                        ->url($page->getUploadUrl('images'))
+                        ->uploader()!!}
+                    </div>                            
+                </div>
+            </div>
+            @elseif ($mode == 'edit')
+            <div class="tab-pane row" id="images">
+                <div class="form-group">
+                    <label for="images" class="control-label col-lg-12 col-sm-12 text-left">
+                        {{trans('page::page.label.images') }}
+                    </label>
+                    <div class='col-lg-6 col-sm-12'>
+                        {!! $page->files('images')
+                        ->url($page->getUploadUrl('images'))
+                        ->uploader()!!}
+                    </div>
+                    <div class='col-lg-6 col-sm-12'>
+                        {!! $page->files('images')->editor()!!}
+                    </div>
+                </div>
+            </div>
+            @elseif ($mode == 'show')
+            <div class="tab-pane disabled row" id="images">
+                <div class='col-md-6'>
+                    {!! $page->files('banner') !!}
+                </div>
+                <div class='col-md-6'>
+                    {!! $page->files('images') !!}
+                </div>
+            </div>
+            @endif

@@ -15,7 +15,7 @@ class PageRepository extends BaseRepository implements PageRepositoryInterface
      */
     public function boot()
     {
-
+        $this->fieldSearchable = config('litecms.page.page.search');
     }
 
     /**
@@ -25,7 +25,6 @@ class PageRepository extends BaseRepository implements PageRepositoryInterface
      */
     public function model()
     {
-        $this->fieldSearchable = config('litecms.page.page.search');
         return config('litecms.page.page.model');
     }
 

@@ -19,21 +19,9 @@
         ->action(trans_url('admin/page/page'))!!}
         {!!csrf_token()!!}
          
-         <div class="tab-content clearfix">   
-            <div class="tab-pan-title ">  {{ trans('app.create') }}   {{ trans('page::page.name') }}</div> 
-                  @include('page::admin.page.partial.entry')
-                  <div class="tab-pane row" id="images">
-                    <div class="form-group">
-                        <label for="images" class="control-label col-lg-12 col-sm-12 text-left">
-                            {{trans('page::page.label.images') }}
-                        </label>
-                        <div class='col-lg-6 col-sm-12'>
-                            {!! $page->files('images')
-                            ->url($page->getUploadUrl('images'))
-                            ->uploader()!!}
-                        </div>                            
-                    </div>
-                </div>
+        <div class="tab-content clearfix">   
+            <div class="tab-pan-title ">  {{ trans('app.create') }}   {{ trans('page::page.name') }}</div>
+            @include('page::admin.page.partial.entry', ['mode' => 'create'])
         </div>
       
         {!! Form::close() !!}

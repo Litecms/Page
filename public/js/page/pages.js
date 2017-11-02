@@ -1,49 +1,3 @@
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <h1>
-            <i class="fa fa-file-text-o"></i> {!! trans('page::page.name') !!} <small> {!! trans('app.manage') !!} {!! trans('page::page.names') !!}</small>
-        </h1>
-        <ol class="breadcrumb">
-            <li><a href="{!! guard_url('/') !!}"><i class="fa fa-dashboard"></i> {!! trans('app.home') !!} </a></li>
-            <li class="active">{!! trans('page::page.names') !!}</li>
-        </ol>
-    </section>
-    <!-- Main content -->
-    <section class="content">
-    <div id='page-page-entry'>
-    </div>
-        <div class="nav-tabs-custom">
-            <ul class="nav nav-tabs">
-                    <li class="{!!(request('status') == '')?'active':'';!!}">
-                        <a href="{!!guard_url('page/page')!!}">{!! trans('page::page.names') !!}</a>
-                    </li>
-                    <li class="pull-right">
-                    <span class="actions">   
-                    @include('page::admin.page.partial.filter')
-                    @include('page::admin.page.partial.column')
-                    </span> 
-                </li>
-            </ul>
-            <div class="tab-content">
-                <table id="page-page-list" class="table table-striped data-table">
-                    <thead class="list_head">
-                    <th style="text-align: right;" width="1%"><a class="btn-reset-filter" href="#Reset" style="display:none; color:#fff;"><i class="fa fa-filter"></i></a> <input type="checkbox" id="page-page-check-all"></th>
-                    <th>{!! trans('page::page.label.name')!!}</th>
-                    <th>{!! trans('page::page.label.title')!!}</th>
-                    <th>{!! trans('page::page.label.url')!!}</th>
-                    <th>{!! trans('page::page.label.heading')!!}</th>
-                    <th>{!! trans('page::page.label.order')!!}</th>
-                    </thead>
-                </table>
-            </div>
-        </div>
-    </section>
-</div>
-
-<script type="text/javascript">
-
 var oTable;
 var oSearch = [];
 $(document).ready(function(){
@@ -68,6 +22,7 @@ $(document).ready(function(){
         "fnServerData" : function ( sSource, aoData, fnCallback ) {
 
             $.each(oSearch, function(key, val){
+                console.log(val);
                 aoData.push( { 'name' : key, 'value' : val } );
             });
             app.dataTable(aoData);
@@ -147,5 +102,69 @@ $(document).ready(function(){
         }
     });
 
+    $(".page-page .btn-open").click(function(){
+      $('#open-list').load("{!!guard_url('/settings/setting/search/page.page.search')!!}");
+      $('#modal-open').modal("show");
+    });
+
+   $(".page-page .btn-search").click(function(){
+      $('#modal-search').modal("show");
+    });
+   
+    $('.page-page .btn-save').click(function(e){
+        var search = prompt("Please enter name for your search");
+        if (search == null) {
+            toastr.error('Please enter valid name.', 'Error');
+            return false;
+        }
+        var formData = new FormData();
+        formData.append('value', $("#form-search").serialize());
+        formData.append('name', search);
+        formData.append('key', 'page.page.search');
+        formData.append('package', 'Page');
+        formData.append('module', 'Page');
+
+        $.ajax({
+            url : "{!!guard_url('/settings/setting')!!}",
+            type: "POST",
+            data: formData,
+            cache: false,
+            processData: false,
+            contentType: false,
+            success:function(data, textStatus, jqXHR)
+            {
+                toastr.success('Search saved successfully.', 'Success');
+            },
+            error: function(jqXHR, textStatus, errorThrown)
+            {
+                toastr.error('An error occurred while saving.', 'Error');
+            }
+        });
+
+        e.preventDefault();
+    });
+
+    $('#btn-apply-search').click( function() {
+        oSearch = {};
+        $('#form-search input,#form-search select').each( function () {
+          key = $(this).attr('name');
+          val = $(this).val();
+          oSearch[key] = val;
+        });
+        oTable.api().draw();
+        $('#page-page-list .btn-reset-filter').css('display', '');
+        $('#modal-search').modal("hide");
+        
+      });
+    
+    $(".btn-reset-filter").click(function (e) {
+        e.preventDefault();
+        $("#form-search")[ 0 ].reset();
+        $('#form-search input,#form-search select').each( function () {
+          oTable.search( this.value ).draw();
+        });
+        $('#page-page-list .reset_filter').css('display', 'none');
+
+    });
+
 });
-</script>

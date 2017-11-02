@@ -22,18 +22,7 @@
         ->action(trans_url('admin/page/page/'. $page->getRouteKey()))!!}
         {!!Form::token()!!}
         <div class="tab-content clearfix">
-                 
             <div class="tab-pan-title">  {{ trans('app.show') }}   [{!!$page->name!!}]</div>             
-           
-                @include('page::admin.page.partial.entry')             
-                <div class="tab-pane disabled row" id="images">
-                    <div class='col-md-6'>
-                        {!! $page->files('banner') !!}
-                    </div>
-                    <div class='col-md-6'>
-                        {!! $page->files('images') !!}
-                    </div>
-                </div>
-           
+                @include('page::admin.page.partial.entry', ['mode' => 'show'])             
         </div>
     </div>
