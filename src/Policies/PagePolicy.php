@@ -25,7 +25,7 @@ class PagePolicy
             return true;
         }
 
-        return $user->id === $page->user_id;
+        return $user->id == $page->user_id;
     }
 
     /**
@@ -56,7 +56,7 @@ class PagePolicy
             return true;
         }
 
-        return $user->id === $page->user_id;
+        return $user->id == $page->user_id;
     }
 
     /**
@@ -74,7 +74,7 @@ class PagePolicy
             return true;
         }
 
-        return $user->id === $page->user_id;
+        return $user->id == $page->user_id;
     }
 
     /**
@@ -88,7 +88,7 @@ class PagePolicy
     public function before($user, $ability)
     {
 
-        if ($user->isSuperUser()) {
+        if ($user->isSuperuser()) {
             return true;
         }
 
