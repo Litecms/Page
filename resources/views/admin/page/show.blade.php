@@ -9,8 +9,8 @@
             <div class="box-tools pull-right">
                 <button type="button" class="btn btn-success btn-sm" data-action='NEW' data-load-to='#page-page-entry' data-href='{{Trans::to('admin/page/page/create')}}'><i class="fa fa-plus-circle"></i> {{ trans('app.new') }}</button>
                 @if($page->id)
-                <button type="button" class="btn btn-primary btn-sm" data-action="EDIT" data-load-to='#page-page-entry' data-href='{{ trans_url('/admin/page/page') }}/{{$page->getRouteKey()}}/edit'><i class="fa fa-pencil-square"></i> {{ trans('app.edit') }}</button>
-                <button type="button" class="btn btn-danger btn-sm" data-action="DELETE" data-load-to='#page-page-entry' data-datatable='#main-list' data-href='{{ trans_url('/admin/page/page') }}/{{$page->getRouteKey()}}' >
+                <button type="button" class="btn btn-primary btn-sm" data-action="EDIT" data-load-to='#page-page-entry' data-href='{{ guard_url('page/page') }}/{{$page->getRouteKey()}}/edit'><i class="fa fa-pencil-square"></i> {{ trans('app.edit') }}</button>
+                <button type="button" class="btn btn-danger btn-sm" data-action="DELETE" data-load-to='#page-page-entry' data-datatable='#main-list' data-href='{{ guard_url('page/page') }}/{{$page->getRouteKey()}}' >
                 <i class="fa fa-times-circle"></i> {{ trans('app.delete') }}
                 </button>
                 @endif
@@ -19,7 +19,7 @@
         {!!Form::vertical_open()
         ->id('show-page-show')
         ->method('PUT')
-        ->action(trans_url('admin/page/page/'. $page->getRouteKey()))!!}
+        ->action(guard_url('page/page/'. $page->getRouteKey()))!!}
         {!!Form::token()!!}
         <div class="tab-content clearfix">
             <div class="tab-pan-title">  {{ trans('app.show') }}   [{!!$page->name!!}]</div>             

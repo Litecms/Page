@@ -23,7 +23,7 @@
                     ->id('form-manage-column')
                     ->method('POST')
                     ->files('true')
-                    ->action(guard_url('/settings/settings'))!!}
+                    ->action(guard_url('settings/settings'))!!}
                     @foreach(trans('page::page.cloumns') as $key => $val)
 
                     @endforeach
@@ -95,7 +95,7 @@
         formData.append('module', 'Page');
         formData.append('name', 'Page Page Columns');
         $.ajax({
-            url : "{!!guard_url('/settings/setting')!!}",
+            url : "{!!guard_url('settings/setting')!!}",
             type: "POST",
             data: formData,
             cache: false,

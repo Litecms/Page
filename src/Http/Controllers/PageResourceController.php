@@ -119,7 +119,7 @@ class PageResourceController extends BaseController
             return $this->response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(guard_url('/page/page'))
+                ->url(guard_url('page/page'))
                 ->redirect();
         }
 
@@ -228,7 +228,7 @@ class PageResourceController extends BaseController
             return $this->response->message($e->getMessage())
                 ->status("error")
                 ->code(400)
-                ->url(guard_url('/page/page'))
+                ->url(guard_url('page/page'))
                 ->redirect();
         }
 
@@ -250,7 +250,7 @@ class PageResourceController extends BaseController
             return $this->response->message(trans('messages.success.restore', ['Module' => trans('page::page.name')]))
                 ->status("success")
                 ->code(202)
-                ->url(guard_url('/page/page'))
+                ->url(guard_url('page/page'))
                 ->redirect();
 
         } catch (Exception $e) {
@@ -258,7 +258,7 @@ class PageResourceController extends BaseController
             return $this->response->message($e->getMessage())
                 ->status("error")
                 ->code(400)
-                ->url(guard_url('/page/page/'))
+                ->url(guard_url('page/page/'))
                 ->redirect();
         }
 

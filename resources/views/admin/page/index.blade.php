@@ -3,7 +3,9 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            <i class="fa fa-file-text-o"></i> {!! trans('page::page.name') !!} <small> {!! trans('app.manage') !!} {!! trans('page::page.names') !!}</small>
+
+            <i class="fa fa-book"></i>
+             {!! trans('page::page.name') !!} <small> {!! trans('app.manage') !!} {!! trans('page::page.names') !!}</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="{!! guard_url('/') !!}"><i class="fa fa-dashboard"></i> {!! trans('app.home') !!} </a></li>

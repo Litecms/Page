@@ -169,7 +169,7 @@ $(document).ready(function(){
     $(".page-page .btn-open").click(function(){
         toastr.info('This feature will be enabled soon.', 'Coming soon');
         return false;
-        $('#open-list').load("{!!guard_url('/settings/setting/search/page.page.search')!!}");
+        $('#open-list').load("{!!guard_url('settings/setting/search/page.page.search')!!}");
         $('#modal-open').modal("show");
     });
 
@@ -193,7 +193,7 @@ $(document).ready(function(){
         formData.append('module', 'Page');
 
         $.ajax({
-            url : "{!!guard_url('/settings/setting')!!}",
+            url : "{!!guard_url('settings/setting')!!}",
             type: "POST",
             data: formData,
             cache: false,

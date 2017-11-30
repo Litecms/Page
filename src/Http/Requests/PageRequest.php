@@ -37,7 +37,7 @@ class PageRequest extends FormRequest
 
         if ($this->isDelete()) {
             // Determine if the user is authorized to delete an entry,
-            return $this->can('delete');
+            return $this->can('destroy');
         }
 
         // Determine if the user is authorized to view the module.
