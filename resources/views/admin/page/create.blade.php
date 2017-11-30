@@ -17,7 +17,6 @@
         ->method('POST')
         ->files('true')
         ->action(guard_url('page/page'))!!}
-        {!!csrf_token()!!}
          
         <div class="tab-content clearfix">   
             <div class="tab-pan-title ">  {{ trans('app.create') }}   {{ trans('page::page.name') }}</div>
