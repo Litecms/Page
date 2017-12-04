@@ -28,13 +28,13 @@ class CreatePagesTable extends Migration
             $table->text('meta_description')->nullable();
             $table->mediumText('banner')->nullable();
             $table->text('images')->nullable();
-            $table->enum('compiler', ['php', 'blade', 'none'])->nullable();
-            $table->string('view', 20)->nullable();
+            $table->boolean('compile')->default(false)->nullable();
+            $table->string('view', 20)->default('default')->nullable();
+            $table->string('category', 20)->default('default')->nullable();
             $table->integer('order')->nullable();
             $table->string('slug', 200)->nullable();
-            $table->enum('status', ['draft', 'published', 'hidden', 'suspended', 'spam'])->default('draft')->nullable();
+            $table->enum('status', ['show', 'hide'])->default('show')->nullable();
             $table->string('upload_folder', 100)->nullable();
-            $table->integer('user_id')->nullable();
             $table->softDeletes();
             $table->nullableTimestamps();
         });

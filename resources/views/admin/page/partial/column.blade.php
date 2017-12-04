@@ -24,9 +24,7 @@
                     ->method('POST')
                     ->files('true')
                     ->action(guard_url('settings/settings'))!!}
-                    @foreach(trans('page::page.cloumns') as $key => $val)
 
-                    @endforeach
                     {!!Form::checkboxes('manage_columns')
                     ->checkboxes(trans('page::page.cloumns'))
                     ->inline()

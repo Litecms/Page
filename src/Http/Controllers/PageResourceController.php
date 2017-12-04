@@ -36,7 +36,6 @@ class PageResourceController extends BaseController
      */
     public function index(PageRequest $request)
     {
-
         if ($this->response->typeIs('json')) {
             $pageLimit = $request->input('pageLimit');
             $data      = $this->repository
@@ -90,7 +89,7 @@ class PageResourceController extends BaseController
 
         $page = $this->repository->newInstance([]);
         return $this->response->title(trans('app.new') . ' ' . trans('page::page.name')) 
-            ->view('page::admin.page.create') 
+            ->view('page::page.create', true) 
             ->data(compact('page'))
             ->output();
     }

@@ -63,24 +63,26 @@
                     !!}
                 </div>
                 <div class='col-md-6'>
-                    {!! Form::select('compiler')
-                    -> options(trans('page::page.options.compiler'))
-                    -> label(trans('page::page.label.compiler'))
-                    -> placeholder(trans('page::page.placeholder.compiler'))
-                    !!}
-
-                    {!! Form::select('category_id')
-                    -> options([])
-                    -> label(trans('page::page.label.category_id'))
-                    -> placeholder(trans('page::page.placeholder.category_id'))
-                    !!}
-                    {!! Form::hidden('status')
+                    {!! Form::hidden('compile')
                     -> forceValue('0')
                     !!}
 
-                    {!! Form::checkbox('status')
+                    {!! Form::select('compile')
+                    -> options(trans('page::page.options.compile'))
+                    -> label(trans('page::page.label.compile'))
+                    -> placeholder(trans('page::page.placeholder.compile'))
+                    !!}
+
+                    {!! Form::select('category_id')
+                    -> options(trans('page::page.options.category'))
+                    -> label(trans('page::page.label.category_id'))
+                    -> placeholder(trans('page::page.placeholder.category_id'))
+                    !!}
+
+                    {!! Form::select('status')
+                    -> options(trans('page::page.options.status'))
                     -> label(trans('page::page.label.status'))
-                    -> inline()
+                    -> placeholder(trans('page::page.placeholder.status'))
                     !!}
                 </div>
             </div>

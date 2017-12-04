@@ -4,9 +4,11 @@ return [
     'name'        => 'Page',
     'names'       => 'Pages',
     'options'     => [
-        'view'     => ['page' => 'Default', 'left' => 'Left Menu', 'right' => 'Right Menu'],
-        'compiler' => ['' => 'none', 'php' => 'Php', 'blade' => 'Blade']]
-    ,
+        'view' => ['default' => 'Default', 'left' => 'Left Menu', 'right' => 'Right Menu'],
+        'compile' => ['0' => 'No', '1' => 'Yes'],
+        'status' => ['0' => 'Hide', '1' => 'Show'],
+        'category' => ['default' => 'Default'],
+    ],
     'label'       => [
         'name'             => 'Name',
         'title'            => 'Title',
@@ -19,7 +21,7 @@ return [
         'meta_description' => 'Meta description',
         'banner'           => 'Banner',
         'images'           => 'Images',
-        'compiler'         => 'Compiler',
+        'compile'          => 'Compile',
         'view'             => 'View',
         'order'            => 'Order',
         'status'           => 'Status',
@@ -45,10 +47,10 @@ return [
         'meta_description' => 'Please enter meta description',
         'banner'           => 'Please enter banner',
         'images'           => 'Please enter images',
-        'compiler'         => 'Please enter compiler',
-        'view'             => 'Please enter view',
+        'compile'          => 'Please select compile',
+        'view'             => 'Please select view',
         'order'            => 'Please enter order',
-        'status'           => 'Please enter status',
+        'status'           => 'Please select status',
         'keyword'          => 'Please enter keyword',
         'description'      => 'Please enter description',
         'slug'             => 'Please enter slug',
@@ -59,7 +61,7 @@ return [
      * Columns array for show hide checkbox.
      */
     'cloumns'     => [
-        'name'    => ['name' => 'Name', 'data-column' => 1, 'checked' => 'checked' , 'disabled' => 'disabled'],
+        'name'    => ['name' => 'Name', 'data-column' => 1, 'checked' => 'checked', 'disabled' => 'disabled'],
         'title'   => ['name' => 'Title', 'data-column' => 2, 'checked' => 'checked'],
         'url'     => ['name' => 'URL', 'data-column' => 3, 'checked' => 'checked', 'disabled' => 'disabled'],
         'heading' => ['name' => 'Heading', 'data-column' => 4, 'checked' => 'checked'],

@@ -26,7 +26,7 @@ class PageTableSeeder extends Seeder
                 'order'            => 0,
                 'banner'           => null,
                 'view'             => 'page',
-                'compiler'         => null,
+                'compile'          => null,
                 'status'           => 1,
             ],
 
@@ -177,7 +177,7 @@ class PageTableSeeder extends Seeder
                 'order'            => 0,
                 'banner'           => null,
                 'view'             => 'page',
-                'compiler'         => null,
+                'compile'          => null,
                 'status'           => 1,
             ],
 
@@ -196,7 +196,7 @@ class PageTableSeeder extends Seeder
                 'order'            => 0,
                 'banner'           => null,
                 'view'             => 'page',
-                'compiler'         => null,
+                'compile'          => null,
                 'status'           => 1,
             ],
 
@@ -215,7 +215,7 @@ class PageTableSeeder extends Seeder
                 'order'            => 0,
                 'banner'           => null,
                 'view'             => 'page',
-                'compiler'         => null,
+                'compile'          => null,
                 'status'           => 1,
             ],
 

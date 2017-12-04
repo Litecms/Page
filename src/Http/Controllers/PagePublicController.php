@@ -37,7 +37,11 @@ class PagePublicController extends BaseController
 
         //Set theme variables
         $view = $page->view;
-        $view = view()->exists('page::public.' . $view) ? $view : 'page';
+        $view = view()->exists('page::public.' . $view) ? $view : 'default';
+
+        if ($page->compile) {
+            $page->content = blade_compile($page->content);
+        }
 
         return $this->response->title(strip_tags($page->title))
             ->view('page::public.' . $view)

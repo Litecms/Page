@@ -86,11 +86,11 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                      
-                                    <label for="search[compiler]" class="col-sm-2 control-label">
-                                        {!! trans('page::page.label.compiler')!!}
+                                    <label for="search[compile]" class="col-sm-2 control-label">
+                                        {!! trans('page::page.label.compile')!!}
                                     </label>
                                     <div class="col-sm-10">
-                                        {!! Form::text('search[compiler]')->raw()!!}
+                                        {!! Form::text('search[compile]')->raw()!!}
                                     </div>
                                 </div>
                             </div>
@@ -118,8 +118,6 @@
                             </div>
                             </div>
                         </div>
-                    </form>
-
                     </div>
                 </div>
                 <div class="modal-footer">
