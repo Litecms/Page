@@ -17,29 +17,38 @@
             </div>
             <div class="tab-pane disabled row" id="metatags">
                 <div class="col-md-6 col-lg-6">
+                    {!! Form::text('title')
+                    -> label(trans('page::page.label.title'))
+                    -> placeholder(trans('page::page.placeholder.title'))
+                    !!}
+                    {!! Form::text('heading')
+                    -> label(trans('page::page.label.heading'))
+                    -> placeholder(trans('page::page.placeholder.heading'))
+                    !!}
+                    {!! Form::text('sub_heading')
+                    -> label(trans('page::page.label.sub_heading'))
+                    -> placeholder(trans('page::page.placeholder.sub_heading'))
+                    !!}
                     {!! Form::text('meta_title')
                     -> label(trans('page::page.label.meta_title'))
                     -> placeholder(trans('page::page.placeholder.meta_title'))
                     !!}
                 </div>
+
                 <div class="col-md-6 col-lg-6">
-                    {!! Form::text('heading')
-                    -> label(trans('page::page.label.heading'))
-                    -> placeholder(trans('page::page.placeholder.heading'))
-                    !!}
-                </div>
-                <div class="col-md-6 col-lg-6">
-                    {!! Form::textarea('meta_keyword')
+                    {!! Form::text('meta_keyword')
                     -> label(trans('page::page.label.meta_keyword'))
-                    -> rows(4)
                     -> placeholder(trans('page::page.placeholder.meta_keyword'))
                     !!}
-                </div>
-                <div class="col-md-6 col-lg-6">
                     {!! Form::textarea('meta_description')
                     -> label(trans('page::page.label.meta_description'))
-                    -> rows(4)
+                    -> rows(3)
                     -> placeholder(trans('page::page.placeholder.meta_description'))
+                    !!}
+                    {!! Form::textarea('abstract')
+                    -> label(trans('page::page.label.abstract'))
+                    -> rows(3)
+                    -> placeholder(trans('page::page.placeholder.abstract'))
                     !!}
                 </div>
             </div>

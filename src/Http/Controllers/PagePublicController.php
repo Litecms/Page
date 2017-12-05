@@ -43,7 +43,10 @@ class PagePublicController extends BaseController
             $page->content = blade_compile($page->content);
         }
 
-        return $this->response->title(strip_tags($page->title))
+        return $this->response
+            ->setMetaKeyword(strip_tags($page->meta_keyword))
+            ->setMetaDescription(strip_tags($page->meta_description))
+            ->setTitle(strip_tags($page->meta_title))
             ->view('page::public.' . $view)
             ->data(compact('page'))
             ->output();

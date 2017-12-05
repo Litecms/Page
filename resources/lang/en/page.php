@@ -40,7 +40,7 @@ return [
         'description'      => 'Please enter description',
         'heading'          => 'Please enter heading',
         'sub_heading'      => 'Please enter sub heading',
-        'abstract'         => 'Please enter abstract',
+        'abstract'         => 'Please enter abstract / summary text for the page',
         'content'          => 'Please enter content',
         'meta_title'       => 'Please enter meta title',
         'meta_keyword'     => 'Please enter meta keyword',

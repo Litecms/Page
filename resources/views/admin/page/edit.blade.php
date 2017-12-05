@@ -2,7 +2,7 @@
     <div class="nav-tabs-custom">
         <!-- Nav tabs -->
         <ul class="nav nav-tabs primary">
-            <li class="active"><a href="#page" data-toggle="tab">{{ trans('page::page.tab.page') }}</a></li>
+            <li class="active"><a href="#details" data-toggle="tab">{{ trans('page::page.tab.page') }}</a></li>
             <li><a href="#metatags" data-toggle="tab">{{ trans('page::page.tab.meta') }}</a></li>
             <li><a href="#settings" data-toggle="tab">{{ trans('page::page.tab.setting') }}</a></li>
             <li><a href="#images" data-toggle="tab">{{ trans('page::page.tab.image') }}</a></li>
