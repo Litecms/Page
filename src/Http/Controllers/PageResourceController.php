@@ -184,7 +184,7 @@ class PageResourceController extends BaseController
             return $this->response->message(trans('messages.success.deleted', ['Module' => trans('page::page.name')]))
                 ->code(202)
                 ->status('success')
-                ->url(guard_url('page/page'))
+                ->url(guard_url('page/page/0'))
                 ->redirect();
 
         } catch (Exception $e) {

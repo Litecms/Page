@@ -10,7 +10,7 @@
                 <button type="button" class="btn btn-success btn-sm" data-action='NEW' data-load-to='#page-page-entry' data-href='{{Trans::to('admin/page/page/create')}}'><i class="fa fa-plus-circle"></i> {{ trans('app.new') }}</button>
                 @if($page->id)
                 <button type="button" class="btn btn-primary btn-sm" data-action="EDIT" data-load-to='#page-page-entry' data-href='{{ guard_url('page/page') }}/{{$page->getRouteKey()}}/edit'><i class="fa fa-pencil-square"></i> {{ trans('app.edit') }}</button>
-                <button type="button" class="btn btn-danger btn-sm" data-action="DELETE" data-load-to='#page-page-entry' data-datatable='#main-list' data-href='{{ guard_url('page/page') }}/{{$page->getRouteKey()}}' >
+                <button type="button" class="btn btn-danger btn-sm" data-action="DELETE" data-load-to='#page-page-entry' data-datatable='#page-page-list' data-href='{{ guard_url('page/page') }}/{{$page->getRouteKey()}}' >
                 <i class="fa fa-times-circle"></i> {{ trans('app.delete') }}
                 </button>
                 @endif

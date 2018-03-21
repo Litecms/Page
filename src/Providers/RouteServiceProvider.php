@@ -86,7 +86,9 @@ class RouteServiceProvider extends ServiceProvider
             'namespace'  => $this->namespace,
             'prefix'     => trans_setlocale() . '/api',
         ], function ($router) {
-            require (__DIR__ . '/../../routes/api.php');
+            Route::group(['prefix' => 'api'], function ($router) {
+                    require (__DIR__ . '/../../routes/api.php');
+            });
         });
     }
 

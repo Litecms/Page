@@ -3,21 +3,36 @@
 namespace Litecms\Page\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Litepie\Database\Traits\Slugger;
+use Litepie\Activities\Traits\LogsActivity;
 use Litepie\Database\Model;
+use Litepie\Database\Traits\Slugger;
 use Litepie\Filer\Traits\Filer;
 use Litepie\Hashids\Traits\Hashids;
 use Litepie\Trans\Traits\Translatable;
-use Litepie\Revision\Traits\Revision;
 
 class Page extends Model
 {
-    use Filer, SoftDeletes, Hashids, Slugger, Translatable, Revision;
+    use Filer, SoftDeletes, Hashids, Slugger, Translatable, LogsActivity;
 
     /**
      * Configuartion for the model.
      *
      * @var array
      */
-     protected $config = 'litecms.page.page';
+    protected $config = 'litecms.page.page';
+
+    /**
+     * Set the pages title and heading.
+     *
+     * @param  string  $value
+     * @return void
+     */
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name']        = $value;
+        $this->attributes['title']       = $value;
+        $this->attributes['meta_title']  = $value;
+        $this->attributes['heading']     = $value;
+        $this->attributes['sub_heading'] = $value;
+    }
 }

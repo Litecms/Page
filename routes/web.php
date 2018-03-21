@@ -1,9 +1,10 @@
 <?php
+// Guard routes for pages
+Route::group(['prefix' => set_route_guard('web')], function ($router) {
 
-// Admin routes for module
-Route::group(['prefix' => set_route_guard('web') . '/page'], function () {
-    Route::resource('page', 'PageResourceController');
+	Route::group(['prefix' => 'page'], function ($router) {
+	    Route::resource('page', 'PageResourceController');
+	});
 });
-
-// Public routes for module
+// Public routes for pages
 Route::get('/{slug}.html', 'PagePublicController@getPage');

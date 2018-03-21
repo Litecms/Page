@@ -119,9 +119,7 @@
                         ->url($page->getUploadUrl('images'))
                         ->uploader()!!}
                     </div>
-                    <div class='col-lg-6 col-sm-12'>
-                        {!! $page->files('images')->editor()!!}
-                    </div>
+
                 </div>
             </div>
             @elseif ($mode == 'show')

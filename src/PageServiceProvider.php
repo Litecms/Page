@@ -36,6 +36,8 @@ class PageServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'litecms.page');
+
         $this->app->bind('page', function ($app) {
             return $this->app->make('Litecms\Page\Page');
         });
