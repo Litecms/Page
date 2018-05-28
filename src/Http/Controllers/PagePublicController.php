@@ -46,7 +46,7 @@ class PagePublicController extends BaseController
         return $this->response
             ->setMetaKeyword(strip_tags($page->meta_keyword))
             ->setMetaDescription(strip_tags($page->meta_description))
-            ->setTitle(strip_tags($page->meta_title))
+            ->setMetaTitle(strip_tags($page->meta_title))
             ->view('page::public.' . $view)
             ->data(compact('page'))
             ->output();
