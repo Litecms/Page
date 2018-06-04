@@ -49,7 +49,7 @@ class PageResourceController extends BaseController
         $pages = $this->repository->paginate();
 
         return $this->response->title(trans('page::page.names'))
-            ->view('page::page.index', true)
+            ->view('page::page.index')
             ->data(compact('pages'))
             ->output();
     }
