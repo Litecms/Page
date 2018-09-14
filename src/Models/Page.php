@@ -21,18 +21,32 @@ class Page extends Model
      */
     protected $config = 'litecms.page.page';
 
-    /**
-     * Set the pages title and heading.
-     *
-     * @param  string  $value
-     * @return void
-     */
+    // /**
+    //  * Set the pages title and heading.
+    //  *
+    //  * @param  string  $value
+    //  * @return void
+    //  */
     public function setNameAttribute($value)
     {
-        $this->attributes['name']        = $value;
-        $this->attributes['title']       = $value;
-        $this->attributes['meta_title']  = $value;
-        $this->attributes['heading']     = $value;
-        $this->attributes['sub_heading'] = $value;
+        $this->attributes['name'] = $value;
+
+        if (empty($this->attributes['title'])) {
+            $this->attributes['title'] = $value;
+        }
+
+        if (empty($this->attributes['meta_title'])) {
+            $this->attributes['meta_title'] = $value;
+        }
+
+        if (empty($this->attributes['heading'])) {
+            $this->attributes['heading'] = $value;
+        }
+
+        if (empty($this->attributes['sub_heading'])) {
+            $this->attributes['sub_heading'] = $value;
+        }
+
     }
+
 }

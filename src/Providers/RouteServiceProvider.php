@@ -46,7 +46,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         $this->mapWebRoutes();
 
-        // $this->mapApiRoutes();
+        $this->mapApiRoutes();
 
         //
     }
@@ -62,13 +62,11 @@ class RouteServiceProvider extends ServiceProvider
     {
         if(request()->segment(1) == 'api' || request()->segment(2) == 'api') return;
 
-        Route::group([
-            'middleware' => 'web',
-            'namespace'  => $this->namespace,
-            'prefix'     => trans_setlocale(),
-        ], function ($router) {
-            require (__DIR__ . '/../../routes/web.php');
-        });
+        Route::middleware('web')
+             ->namespace($this->namespace)
+             ->prefix(trans_setlocale())
+             ->group(__DIR__ . '/../../routes/web.php');
+
     }
 
     /**
@@ -81,14 +79,12 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapApiRoutes()
     {
         if(request()->segment(1) != 'api' && request()->segment(2) != 'api') return;
+
         Route::group([
             'middleware' => 'api',
             'namespace'  => $this->namespace,
-            'prefix'     => trans_setlocale() . '/api',
         ], function ($router) {
-            Route::group(['prefix' => 'api'], function ($router) {
-                    require (__DIR__ . '/../../routes/api.php');
-            });
+            require (__DIR__ . '/../../routes/api.php');
         });
     }
 
