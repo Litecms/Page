@@ -15,7 +15,7 @@ class CreatePagesTable extends Migration
         /*
          * Table: pages
          */
-        Schema::create('pages', function ($table) {
+        Schema::create(config('litecms.page.page.model.table'), function ($table) {
             $table->increments('id')->unsigned();
             $table->string('name', 50)->nullable();
             $table->text('title')->nullable();
@@ -47,6 +47,6 @@ class CreatePagesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('pages');
+        Schema::drop(config('litecms.page.page.model.table'));
     }
 }
