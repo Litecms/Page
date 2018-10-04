@@ -36,7 +36,20 @@ Views
 
     php artisan vendor:publish --provider="Litecms\Page\Providers\PageServiceProvider" --tag="view"
 
+**Publishing views to theme**
 
+Publishes admin view
+    php artisan theme:publish --provider="Litecms\Page\Providers\PageServiceProvider" --view=="admin" --theme=="admin"
+
+Publishes client view
+    php artisan theme:publish --provider="Litecms\Page\Providers\PageServiceProvider" --view=="default" --theme=="client"
+
+Publishes user view
+    php artisan theme:publish --provider="Litecms\Page\Providers\PageServiceProvider" --view=="default" --theme=="user"
+
+Publishes public view
+    php artisan theme:publish --provider="Litecms\Page\Providers\PageServiceProvider" --view=="public" --theme=="public"
+    
 You are done!
 
 ## Usage

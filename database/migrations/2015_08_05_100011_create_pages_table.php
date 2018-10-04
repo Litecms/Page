@@ -15,7 +15,7 @@ class CreatePagesTable extends Migration
         /*
          * Table: pages
          */
-        Schema::create('pages', function ($table) {
+        Schema::create(config('litecms.page.page.table'), function ($table) {
             $table->increments('id')->unsigned();
             $table->string('name', 50)->nullable();
             $table->text('title')->nullable();
@@ -33,7 +33,7 @@ class CreatePagesTable extends Migration
             $table->string('category', 20)->default('default')->nullable();
             $table->integer('order')->nullable();
             $table->string('slug', 200)->nullable();
-            $table->enum('status', ['show', 'hide'])->default('show')->nullable();
+            $table->enum('status', ['Show', 'Hide'])->default('Show')->nullable();
             $table->string('upload_folder', 100)->nullable();
             $table->softDeletes();
             $table->nullableTimestamps();
@@ -47,6 +47,6 @@ class CreatePagesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('pages');
+        Schema::drop(config('litecms.page.page.table'));
     }
 }

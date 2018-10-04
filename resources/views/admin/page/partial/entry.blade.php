@@ -116,7 +116,6 @@
                     </label>
                     <div class='col-lg-6 col-sm-12'>
                         {!! $page->files('images')
-                        ->url($page->getUploadUrl('images'))
                         ->uploader()!!}
                     </div>
 

@@ -9,7 +9,7 @@ class PageTableSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('pages')->insert([
+        DB::table(config('litecms.page.page.table'))->insert([
 
             [
                 'id'               => 1,
@@ -27,7 +27,7 @@ class PageTableSeeder extends Seeder
                 'banner'           => null,
                 'view'             => 'page',
                 'compile'          => null,
-                'status'           => 1,
+                'status'           => 'Show',
             ],
 
             [
@@ -160,7 +160,7 @@ class PageTableSeeder extends Seeder
                 'banner'           => null,
                 'view'             => 'page',
                 'compile'          => null,
-                'status'           => 1,
+                'status'           => 'Show',
             ],
 
             [
@@ -179,7 +179,7 @@ class PageTableSeeder extends Seeder
                 'banner'           => null,
                 'view'             => 'page',
                 'compile'          => null,
-                'status'           => 1,
+                'status'           => 'Show',
             ],
 
             [
@@ -198,7 +198,7 @@ class PageTableSeeder extends Seeder
                 'banner'           => null,
                 'view'             => 'page',
                 'compile'          => null,
-                'status'           => 1,
+                'status'           => 'Show',
             ],
 
         ]);

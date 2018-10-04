@@ -64,7 +64,6 @@ class PageResourceController extends BaseController
      */
     public function show(PageRequest $request, Page $page)
     {
-
         if ($page->exists) {
             $view = 'page::admin.page.show';
         } else {
