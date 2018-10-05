@@ -2,53 +2,34 @@ This is a Laravel 4 package that provides multilingual page interface for litecm
 
 ## Installation
 
-Begin by installing this package through Composer. Edit your project's `composer.json` file to require `litecms/page`.
+Begin by installing this package through Composer.
 
-    "litecms/page": "dev-master"
+    composer install litecms/page
 
-Next, update Composer from the Terminal:
-
-    composer update
-
-Once this operation completes, the final step is to add the service provider and page alias. Open `app/config/app.php`, and add a new item to the providers array.
-
-```php
-'Litecms\Page\PageServiceProvider'
-```
-
-And also add it to alias
-
-```php
-'Page'  => 'Litecms\Page\Facades\Page',
-```
 
 Use the below commands for publishing
 
 Configuration
 
-    php artisan vendor:publish --provider="Litecms\Page\Providers\PageServiceProvider" --tag="config"
+    php artisan vendor:publish --provider="Litecms\Page\PageServiceProvider" --tag="config"
 
 Language
 
-    php artisan vendor:publish --provider="Litecms\Page\Providers\PageServiceProvider" --tag="lang"
+    php artisan vendor:publish --provider="Litecms\Page\PageServiceProvider" --tag="lang"
 
-Views
+Publishing views
 
-    php artisan vendor:publish --provider="Litecms\Page\Providers\PageServiceProvider" --tag="view"
+Publish to resources\vendor directory
 
-**Publishing views to theme**
+    php artisan vendor:publish --provider="Litecms\Page\PageServiceProvider" --tag="view"
 
-Publishes admin view
-    php artisan theme:publish --provider="Litecms\Page\Providers\PageServiceProvider" --view=="admin" --theme=="admin"
+Publishes admin view to admin theme
 
-Publishes client view
-    php artisan theme:publish --provider="Litecms\Page\Providers\PageServiceProvider" --view=="default" --theme=="client"
+    php artisan theme:publish --provider="Litecms\Page\PageServiceProvider" --view="admin" --theme="admin"
 
-Publishes user view
-    php artisan theme:publish --provider="Litecms\Page\Providers\PageServiceProvider" --view=="default" --theme=="user"
+Publishes public view public theme
 
-Publishes public view
-    php artisan theme:publish --provider="Litecms\Page\Providers\PageServiceProvider" --view=="public" --theme=="public"
+    php artisan theme:publish --provider="Litecms\Page\PageServiceProvider" --view="public" --theme="public"
     
 You are done!
 
