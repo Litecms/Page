@@ -29,7 +29,7 @@
                 "Litecms\\Page\\PageServiceProvider"
             ],
             "aliases": {
-                "Page"       : "Litecms\\Page\\Facades"
+                "Page"       : "Litecms\\Page\\Facades\\Page"
             }
         }
     }
