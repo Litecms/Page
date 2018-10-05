@@ -6,8 +6,7 @@ Begin by installing this package through Composer.
 
     composer install litecms/page
 
-
-Use the below commands for publishing
+## Publishing
 
 Configuration
 
@@ -17,7 +16,7 @@ Language
 
     php artisan vendor:publish --provider="Litecms\Page\PageServiceProvider" --tag="lang"
 
-Publishing views
+## Views
 
 Publish to resources\vendor directory
 
@@ -40,6 +39,7 @@ Add pages through `admin/pages`
 Browser to get page browse `/{slug}.html`
 
 Calling other pages inside a view or function
+
 ```php
 {{Page::heading('slug')}}
 {{Page::content('slug')}}
