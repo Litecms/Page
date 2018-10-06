@@ -1,24 +1,31 @@
-This is a Laravel 4 package that provides multilingual page interface for litecms framework.
+Laravel package that provides page management facility for lavalite CMS.
 
 ## Installation
 
-Begin by installing this package through Composer.
+Require this package with composer. 
 
-    composer install litecms/page
+    composer require litecms/page
+
+Laravel 5.5 uses Package Auto-Discovery, so doesn't require you to manually add the ServiceProvider.
+
 
 ## Publishing
 
-Configuration
+**Configuration**
 
     php artisan vendor:publish --provider="Litecms\Page\PageServiceProvider" --tag="config"
 
-Language
+**Language**
 
     php artisan vendor:publish --provider="Litecms\Page\PageServiceProvider" --tag="lang"
 
-## Views
+**Files**
 
-Publish to resources\vendor directory
+    php artisan vendor:publish --provider="Litecms\Page\PageServiceProvider" --tag="storage"
+
+### Views
+
+Publish views to resources\views\vendor directory
 
     php artisan vendor:publish --provider="Litecms\Page\PageServiceProvider" --tag="view"
 
@@ -26,27 +33,6 @@ Publishes admin view to admin theme
 
     php artisan theme:publish --provider="Litecms\Page\PageServiceProvider" --view="admin" --theme="admin"
 
-Publishes public view public theme
+Publishes public view to public theme
 
     php artisan theme:publish --provider="Litecms\Page\PageServiceProvider" --view="public" --theme="public"
-    
-You are done!
-
-## Usage
-
-Add pages through `admin/pages`
-
-Browser to get page browse `/{slug}.html`
-
-Calling other pages inside a view or function
-
-```php
-{{Page::heading('slug')}}
-{{Page::content('slug')}}
-{{Page::title('slug')}}
-{{Page::keyword('slug')}}
-{{Page::description('slug')}}
-{{Page::banner('slug')}}
-```
-
-
