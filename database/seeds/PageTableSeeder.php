@@ -9,7 +9,7 @@ class PageTableSeeder extends Seeder
 {
     public function run()
     {
-        DB::table(config('litecms.page.page.model.table'))->insert([
+        DB::table(config('litecms.page.page.table'))->insert([
 
             [
                 'id'               => 1,

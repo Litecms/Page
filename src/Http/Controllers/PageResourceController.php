@@ -48,7 +48,7 @@ class PageResourceController extends BaseController
 
         $pages = $this->repository->paginate();
 
-        return $this->response->title(trans('page::page.names'))
+        return $this->response->setMetaTitle(trans('page::page.names'))
             ->view('page::page.index')
             ->data(compact('pages'))
             ->output();
@@ -71,7 +71,7 @@ class PageResourceController extends BaseController
             $view = 'page::admin.page.new';
         }
 
-        return $this->response->title(trans('app.view') . ' ' . trans('page::page.name'))
+        return $this->response->setMetaTitle(trans('app.view') . ' ' . trans('page::page.name'))
             ->data(compact('page'))
             ->view($view)
             ->output();
@@ -88,7 +88,7 @@ class PageResourceController extends BaseController
     {
 
         $page = $this->repository->newInstance([]);
-        return $this->response->title(trans('app.new') . ' ' . trans('page::page.name')) 
+        return $this->response->setMetaTitle(trans('app.new') . ' ' . trans('page::page.name')) 
             ->view('page::page.create', true) 
             ->data(compact('page'))
             ->output();
@@ -134,7 +134,7 @@ class PageResourceController extends BaseController
      */
     public function edit(PageRequest $request, Page $page)
     {
-        return $this->response->title(trans('app.edit') . ' ' . trans('page::page.name'))
+        return $this->response->setMetaTitle(trans('app.edit') . ' ' . trans('page::page.name'))
             ->view('page::admin.page.edit')
             ->data(compact('page'))
             ->output();

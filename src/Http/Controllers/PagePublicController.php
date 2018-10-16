@@ -37,7 +37,7 @@ class PagePublicController extends BaseController
 
         //Set theme variables
         $view = $page->view;
-        $view = view()->exists('page::public.' . $view) ? $view : 'default';
+        $view = view()->exists('page::' . $view) ? $view : 'default';
 
         if ($page->compile) {
             $page->content = blade_compile($page->content);
@@ -47,7 +47,7 @@ class PagePublicController extends BaseController
             ->setMetaKeyword(strip_tags($page->meta_keyword))
             ->setMetaDescription(strip_tags($page->meta_description))
             ->setMetaTitle(strip_tags($page->meta_title))
-            ->view('page::public.' . $view)
+            ->view('page::' . $view)
             ->data(compact('page'))
             ->output();
 
