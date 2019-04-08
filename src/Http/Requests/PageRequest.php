@@ -3,6 +3,7 @@
 namespace Litecms\Page\Http\Requests;
 
 use App\Http\Requests\Request as FormRequest;
+use Litecms\Page\Models\Page;
 
 class PageRequest extends FormRequest
 {
@@ -17,7 +18,7 @@ class PageRequest extends FormRequest
 
         if (is_null($this->model)) {
             // Determine if the user is authorized to access page module,
-            return $this->formRequest->user($this->guard)->canDo('page.page.view');
+            return $this->user()->can('view', Page::class);
         }
 
         if ($this->isWorkflow()) {
@@ -52,6 +53,7 @@ class PageRequest extends FormRequest
      */
     public function rules()
     {
+
         if ($this->isStore()) {
             // validation rule for create request.
             return [
@@ -71,4 +73,5 @@ class PageRequest extends FormRequest
 
         ];
     }
+
 }

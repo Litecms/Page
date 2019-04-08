@@ -19,8 +19,8 @@
         "classmap": [
             "database/seeds"
         ],
-        "psr-4": { 
-            "Litecms\\Page\\": "/src" 
+        "psr-4": {
+            "Litecms\\Page\\": "/src"
         }
     },
     "extra": {

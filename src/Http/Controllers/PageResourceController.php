@@ -24,6 +24,7 @@ class PageResourceController extends BaseController
     {
         parent::__construct();
         $this->repository = $page;
+        $this->repository = app()->make(PageRepositoryInterface::class);
         $this->repository
             ->pushCriteria(\Litepie\Repository\Criteria\RequestCriteria::class)
             ->pushCriteria(\Litecms\Page\Repositories\Criteria\PageResourceCriteria::class);
@@ -64,6 +65,7 @@ class PageResourceController extends BaseController
      */
     public function show(PageRequest $request, Page $page)
     {
+
         if ($page->exists) {
             $view = 'page::admin.page.show';
         } else {

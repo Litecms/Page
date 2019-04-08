@@ -32,9 +32,9 @@ return [
         'visible'      => [],
         'guarded'      => ['*'],
         'slugs'        => ['slug' => 'name'],
-        'dates'        => ['deleted_at', 'updated_at', 'created_at'],
+        'dates'        => ['deleted_at'],
         'fillable'     => ['heading', 'meta_title', 'name', 'slug', 'order', 'view', 'compile', 'status', 'upload_folder', 'content', 'meta_keyword', 'abstract'],
-        'translatable'    => ['title', 'heading', 'content', 'meta_title', 'meta_keyword', 'meta_description'],
+        'translatable'    => ['name', 'heading', 'content', 'meta_title', 'meta_keyword', 'meta_description'],
         'upload_folder' => '/page/page',
         'uploads'      => [
             'banner' => [
@@ -45,9 +45,6 @@ return [
                 'count' => 10,
                 'type'  => 'image',
             ],
-        ],
-        'format'       => [
-            'dates' => ['dob']
         ],
         'casts'        => [
             'banner' => 'array',
