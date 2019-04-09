@@ -24,7 +24,6 @@ class PageResourceController extends BaseController
     {
         parent::__construct();
         $this->repository = $page;
-        $this->repository = app()->make(PageRepositoryInterface::class);
         $this->repository
             ->pushCriteria(\Litepie\Repository\Criteria\RequestCriteria::class)
             ->pushCriteria(\Litecms\Page\Repositories\Criteria\PageResourceCriteria::class);

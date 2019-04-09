@@ -10,7 +10,7 @@ use Litecms\Page\Models\Page;
 /**
  * Resource controller class for page.
  */
-class PageResourceController extends BaseController
+class PageAPIController extends BaseController
 {
 
     /**
