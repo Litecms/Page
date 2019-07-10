@@ -2,7 +2,7 @@
 
 namespace Litecms\Page\Http\Controllers;
 
-use App\Http\Controllers\ResourceController as BaseController;
+use App\Http\Controllers\APIController as BaseController;
 use Litecms\Page\Http\Requests\PageRequest;
 use Litecms\Page\Interfaces\PageRepositoryInterface;
 use Litecms\Page\Models\Page;
@@ -20,9 +20,10 @@ class PageAPIController extends BaseController
      *
      * @return null
      */
-    public function setRepository()
+    public function __construct(PageRepositoryInterface $page)
     {
-        $this->repository = app()->make(PageRepositoryInterface::class);
+        parent::__construct();
+        $this->repository = $page;
         $this->repository
             ->pushCriteria(\Litepie\Repository\Criteria\RequestCriteria::class)
             ->pushCriteria(\Litecms\Page\Repositories\Criteria\PageResourceCriteria::class);
