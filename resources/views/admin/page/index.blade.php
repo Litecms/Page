@@ -98,7 +98,7 @@ $(document).ready(function(){
 
         oTable.$('tr.selected').removeClass('selected');
         $(this).addClass('selected');
-        var d = $('#page-page-list').DataTable().row( this ).data();
+        var d = $('#page-page-list').DataTable().row( this.closest('tr') ).data();
         $('#page-page-entry').load('{!!guard_url('page/page')!!}' + '/' + d.id);
     });
 
