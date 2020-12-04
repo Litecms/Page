@@ -4,7 +4,7 @@ namespace Litecms\Page\Http\Controllers;
 
 use App\Http\Controllers\PublicController as BaseController;
 
-class PagePublicController extends BaseController
+class PagePublicController extends ResourceController
 {
     /**
      * Constructor.

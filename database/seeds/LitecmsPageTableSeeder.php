@@ -1,11 +1,8 @@
 <?php
 
-namespace Litecms;
-
-use DB;
 use Illuminate\Database\Seeder;
 
-class PageTableSeeder extends Seeder
+class LitecmsPageTableSeeder extends Seeder
 {
     public function run()
     {
@@ -210,7 +207,7 @@ class PageTableSeeder extends Seeder
                 'url'         => 'admin/page/page',
                 'name'        => 'Pages',
                 'description' => null,
-                'icon'        => 'fa fa-book',
+                'icon'        => 'lab la-product-hunt',
                 'target'      => null,
                 'order'       => 5,
                 'status'      => 1,

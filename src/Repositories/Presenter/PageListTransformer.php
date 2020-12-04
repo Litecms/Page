@@ -17,6 +17,7 @@ class PageListTransformer extends TransformerAbstract
             'title'   => $page->title,
             'keyword' => $page->keyword,
             'status'  => $page->status,
+            'category'  => $page->category,
             'order'   => $page->order,
         ];
     }

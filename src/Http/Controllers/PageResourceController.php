@@ -2,7 +2,7 @@
 
 namespace Litecms\Page\Http\Controllers;
 
-use App\Http\Controllers\ResourceController as BaseController;
+use Litepie\Http\Controllers\ResourceController;
 use Litecms\Page\Http\Requests\PageRequest;
 use Litecms\Page\Interfaces\PageRepositoryInterface;
 use Litecms\Page\Models\Page;
@@ -10,7 +10,7 @@ use Litecms\Page\Models\Page;
 /**
  * Resource controller class for page.
  */
-class PageResourceController extends BaseController
+class PageResourceController extends ResourceController
 {
 
     /**
@@ -36,21 +36,18 @@ class PageResourceController extends BaseController
      */
     public function index(PageRequest $request)
     {
-        if ($this->response->typeIs('json')) {
-            $pageLimit = $request->input('pageLimit');
-            $data      = $this->repository
-                ->setPresenter(\Litecms\Page\Repositories\Presenter\PageListPresenter::class)
-                ->getDataTable($pageLimit);
-            return $this->response
-                ->data($data)
-                ->output();
+        $pageLimit = $request->input('pageLimit', 10);
+        $data = $this->repository
+            ->setPresenter(\Litecms\Page\Repositories\Presenter\PageListPresenter::class)
+            ->paginate($pageLimit);
+        extract($data);
+        $view = 'page::page.index';
+        if ($request->ajax()) {
+            $view = 'page::page.more';
         }
-
-        $pages = $this->repository->paginate();
-
         return $this->response->setMetaTitle(trans('page::page.names'))
-            ->view('page::page.index')
-            ->data(compact('pages'))
+            ->view($view)
+            ->data(compact('data', 'meta'))
             ->output();
     }
 
@@ -62,17 +59,18 @@ class PageResourceController extends BaseController
      *
      * @return Response
      */
-    public function show(PageRequest $request, Page $page)
+    public function show(PageRequest $request, Page $data)
     {
 
-        if ($page->exists) {
-            $view = 'page::admin.page.show';
+        if ($data->exists) {
+            $view = 'page::page.show';
         } else {
-            $view = 'page::admin.page.new';
+            $view = 'page::page.new';
         }
 
-        return $this->response->setMetaTitle(trans('app.view') . ' ' . trans('page::page.name'))
-            ->data(compact('page'))
+        return $this->response
+            ->setMetaTitle(trans('app.view') . ' ' . trans('page::page.name'))
+            ->data(compact('data'))
             ->view($view)
             ->output();
     }
@@ -87,10 +85,11 @@ class PageResourceController extends BaseController
     public function create(PageRequest $request)
     {
 
-        $page = $this->repository->newInstance([]);
-        return $this->response->setMetaTitle(trans('app.new') . ' ' . trans('page::page.name')) 
-            ->view('page::page.create', true) 
-            ->data(compact('page'))
+        $data = $this->repository->newInstance([]);
+        return $this->response
+            ->setMetaTitle(trans('app.new') . ' ' . trans('page::page.name'))
+            ->view('page::page.create', true)
+            ->data(compact('data'))
             ->output();
     }
 
@@ -104,20 +103,24 @@ class PageResourceController extends BaseController
     public function store(PageRequest $request)
     {
         try {
-            $attributes              = $request->all();
-            $attributes['user_id']   = user_id();
-            $attributes['user_type'] = user_type();
-            $page                 = $this->repository->create($attributes);
-
+            $attribute = $request->all();
+            $attribute['user_id'] = user_id();
+            $attribute['user_type'] = user_type();
+            $data = $this->repository
+                ->setPresenter(\Litecms\Page\Repositories\Presenter\PageShowPresenter::class)
+                ->create($attribute);
+            $data = current($data);
             return $this->response->message(trans('messages.success.created', ['Module' => trans('page::page.name')]))
                 ->code(204)
                 ->status('success')
-                ->url(guard_url('page/page/' . $page->getRouteKey()))
+                ->data(compact('data'))
+                ->url(guard_url('page/page/' . $data['id']))
                 ->redirect();
         } catch (Exception $e) {
             return $this->response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
+                ->data(compact('data'))
                 ->url(guard_url('page/page'))
                 ->redirect();
         }
@@ -132,11 +135,11 @@ class PageResourceController extends BaseController
      *
      * @return Response
      */
-    public function edit(PageRequest $request, Page $page)
+    public function edit(PageRequest $request, Page $data)
     {
         return $this->response->setMetaTitle(trans('app.edit') . ' ' . trans('page::page.name'))
-            ->view('page::admin.page.edit')
-            ->data(compact('page'))
+            ->view('page::page.edit')
+            ->data(compact('data'))
             ->output();
     }
 
@@ -151,16 +154,22 @@ class PageResourceController extends BaseController
     public function update(PageRequest $request, Page $page)
     {
         try {
-            $attributes = $request->all();
-
-            $page->update($attributes);
-            return $this->response->message(trans('messages.success.updated', ['Module' => trans('page::page.name')]))
+            $attribute = $request->all();
+            $data = $this->repository
+                ->setPresenter(\Litecms\Page\Repositories\Presenter\PageShowPresenter::class)
+                ->update($attribute, $page->getRouteKey());
+            $data = current($data);
+            return $this->response
+                ->message(trans('messages.success.updated', ['Module' => trans('page::page.name')]))
                 ->code(204)
+                ->data(compact('data'))
                 ->status('success')
                 ->url(guard_url('page/page/' . $page->getRouteKey()))
                 ->redirect();
         } catch (Exception $e) {
-            return $this->response->message($e->getMessage())
+            return $this->response
+                ->message($e->getMessage())
+                ->data(compact('data'))
                 ->code(400)
                 ->status('error')
                 ->url(guard_url('page/page/' . $page->getRouteKey()))
@@ -184,7 +193,7 @@ class PageResourceController extends BaseController
             return $this->response->message(trans('messages.success.deleted', ['Module' => trans('page::page.name')]))
                 ->code(202)
                 ->status('success')
-                ->url(guard_url('page/page/0'))
+                ->url(guard_url('page/page/'. $page->getRouteKey()))
                 ->redirect();
 
         } catch (Exception $e) {
@@ -263,4 +272,16 @@ class PageResourceController extends BaseController
 
     }
 
+    /**
+     * Return the form elements in the for of json.
+     *
+     * @param String   $element
+     *
+     * @return json
+     */
+    public function form($element = 'fields')
+    {
+        $form = new \Litecms\Page\Form\Page();
+        return $form->form($element, true);
+    }
 }

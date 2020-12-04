@@ -5,14 +5,14 @@ namespace Litecms\Page\Models;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Litepie\Activities\Traits\LogsActivity;
 use Litepie\Database\Model;
-use Litepie\Database\Traits\Slugger;
+use Litepie\Database\Traits\Sluggable;
 use Litepie\Filer\Traits\Filer;
 use Litepie\Hashids\Traits\Hashids;
 use Litepie\Trans\Traits\Translatable;
 
 class Page extends Model
 {
-    use Filer, SoftDeletes, Hashids, Slugger, Translatable, LogsActivity;
+    use Filer, SoftDeletes, Hashids, Sluggable, Translatable, LogsActivity;
 
     /**
      * Configuartion for the model.

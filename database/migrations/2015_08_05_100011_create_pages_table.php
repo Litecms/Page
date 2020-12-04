@@ -17,7 +17,7 @@ class CreatePagesTable extends Migration
          */
         Schema::create(config('litecms.page.page.table'), function ($table) {
             $table->increments('id')->unsigned();
-            $table->string('name', 50)->nullable();
+            $table->string('name', 100)->nullable();
             $table->text('title')->nullable();
             $table->text('heading')->nullable();
             $table->text('sub_heading')->nullable();

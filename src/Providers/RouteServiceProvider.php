@@ -3,9 +3,9 @@
 namespace Litecms\Page\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
-use Route;
 use Litecms\Page\Models\Page;
 use Request;
+use Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -63,11 +63,10 @@ class RouteServiceProvider extends ServiceProvider
 
         Route::group([
             'middleware' => 'web',
-            'namespace'  => $this->namespace,
+            'namespace' => $this->namespace,
         ], function ($router) {
             require (__DIR__ . '/../../routes/web.php');
         });
-
 
     }
 
@@ -83,7 +82,8 @@ class RouteServiceProvider extends ServiceProvider
 
         Route::group([
             'middleware' => 'api',
-            'namespace'  => $this->namespace,
+            'prefix' => 'api',
+            'namespace' => $this->namespace,
         ], function ($router) {
             require (__DIR__ . '/../../routes/api.php');
         });

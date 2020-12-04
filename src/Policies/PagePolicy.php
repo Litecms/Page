@@ -2,7 +2,7 @@
 
 namespace Litecms\Page\Policies;
 
-use App\User;
+use Litepie\User\Contracts\UserPolicy as User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Litecms\Page\Models\Page;
 
@@ -20,7 +20,6 @@ class PagePolicy
      */
     public function view(User $user, Page $page)
     {
-
         if ($user->canDo('page.page.view')) {
             return true;
         }

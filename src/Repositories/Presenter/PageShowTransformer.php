@@ -10,7 +10,7 @@ class PageShowTransformer extends TransformerAbstract
     public function transform(\Litecms\Page\Models\Page $page)
     {
         return [
-            'id'      => $page->eid,
+            'id'      => $page->getRouteKey(),
             'slug' => $page->slug,
             'url' => $page->slug.'.html',
             'name'   => $page->name,
@@ -26,8 +26,9 @@ class PageShowTransformer extends TransformerAbstract
             'compiler' => $page->compiler,
             'status' => $page->status,
             'upload_folder' => $page->upload_folder,
-            'created' => $page->created_at,
-            'order' => $page->order
+            'order' => $page->order,
+            'created_at' => $page->created_at,
+            'updated_at' => $page->updated_at,
         ];
     }
 }
