@@ -1,36 +1,39 @@
 {
-    "name": "litecms/page",
-    "description": "Page package for Lavalite",
-    "keywords": ["lavalite", "page"],
-    "license": "MIT",
-    "type": "lavalite-package",
-    "homepage": "https://github.com/Litecms/Page",
-    "authors": [
-        {
-            "name": "Renfos Technologies Pvt. Ltd.",
-            "email": "info@renfos.com"
-        }
-    ],
-    "require": {
-        "php": "^7.1.3",
-        "composer/installers": "~1.4"
-    },
-    "autoload": {
-        "classmap": [
-            "database/seeds"
-        ],
-        "psr-4": {
-            "Litecms\\Page\\": "/src"
-        }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Litecms\\Page\\PageServiceProvider"
-            ],
-            "aliases": {
-                "Page"       : "Litecms\\Page\\Facades\\Page"
-            }
-        }
+  "name": "litecms/page",
+  "description": "Page package for Lavalite",
+  "keywords": [
+    "lavalite",
+    "page"
+  ],
+  "license": "MIT",
+  "type": "lavalite-package",
+  "homepage": "https://github.com/Litecms/Page",
+  "authors": [
+    {
+      "name": "Renfos Technologies Pvt. Ltd.",
+      "email": "info@renfos.com"
     }
+  ],
+  "require": {
+    "php": "^7.2.5|^8.0",
+    "composer/installers": "~1.9"
+  },
+  "autoload": {
+    "classmap": [
+      "database/seeds"
+    ],
+    "psr-4": {
+      "Litecms\\Page\\": "/src"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Litecms\\Page\\PageServiceProvider"
+      ],
+      "aliases": {
+        "Page": "Litecms\\Page\\Facades\\Page"
+      }
+    }
+  }
 }
