@@ -4,6 +4,8 @@ namespace Litecms\Page\Providers;
 
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Litecms\Page\Repositories\Eloquent\PageRepository;
+use Litecms\Page\Policies\PagePolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -13,7 +15,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        \Litecms\Page\Models\Page::class => \Litecms\Page\Policies\PagePolicy::class,
+        PageRepository::class => PagePolicy::class,
     ];
 
     /**

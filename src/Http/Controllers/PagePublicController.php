@@ -2,21 +2,22 @@
 
 namespace Litecms\Page\Http\Controllers;
 
-use App\Http\Controllers\PublicController as BaseController;
+use Litepie\Http\Controllers\PublicController as BaseController;
+use Litecms\Page\Interfaces\PageRepositoryInterface;
 
-class PagePublicController extends ResourceController
+class PagePublicController extends BaseController
 {
     /**
      * Constructor.
      *
-     * @param type \Litecms\Page\Interfaces\PageInterface $page
-     *
      * @return type
      */
-    public function __construct(\Litecms\Page\Interfaces\PageRepositoryInterface $page)
+    public function __construct(PageRepositoryInterface $page)
     {
         parent::__construct();
-        $this->model = $page;
+        $this->modules = $this->modules(config('litecms.page.modules'), 'page', guard_url('page'));
+        $this->repository = $page;
+
     }
 
     /**
@@ -29,25 +30,25 @@ class PagePublicController extends ResourceController
     protected function getPage($slug)
     {
         // get page by slug
-        $page = $this->model->getPage($slug);
-
+        $page = $this->repository->getPage($slug);
+        
         if (is_null($page)) {
             abort(404);
         }
 
         //Set theme variables
-        $view = $page->view;
+        $view = $page['view'];
         $view = view()->exists('page::' . $view) ? $view : 'default';
 
-        if ($page->compile) {
-            $page->content = blade_compile($page->content);
+        if ($page['compile']) {
+            $page['content'] = blade_compile($page['content']);
         }
 
         return $this->response
-            ->setMetaKeyword(strip_tags($page->meta_keyword))
-            ->setMetaDescription(strip_tags($page->meta_description))
-            ->setMetaTitle(strip_tags($page->meta_title))
-            ->view('page::' . $view)
+            ->setMetaKeyword(strip_tags($page['meta_keyword']))
+            ->setMetaDescription(strip_tags($page['meta_description']))
+            ->setMetaTitle(strip_tags($page['meta_title']))
+            ->view('page::public.' . $view)
             ->data(compact('page'))
             ->output();
 

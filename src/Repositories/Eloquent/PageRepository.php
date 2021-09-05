@@ -3,19 +3,17 @@
 namespace Litecms\Page\Repositories\Eloquent;
 
 use Litecms\Page\Interfaces\PageRepositoryInterface;
-use Litepie\Repository\Eloquent\BaseRepository;
+use Litepie\Repository\BaseRepository;
+use Litecms\Page\Repositories\Eloquent\Presenters\PageItemPresenter;
 
 class PageRepository extends BaseRepository implements PageRepositoryInterface
 {
 
-    /**
-     * Booting the repository.
-     *
-     * @return null
-     */
     public function boot()
     {
+        // $this->pushFilter(RequestFilter::class);
         $this->fieldSearchable = config('litecms.page.page.search');
+
     }
 
     /**
@@ -25,7 +23,7 @@ class PageRepository extends BaseRepository implements PageRepositoryInterface
      */
     public function model()
     {
-        return config('litecms.page.page.model');
+        return config('litecms.page.page.model.model');
     }
 
     /**
@@ -35,6 +33,16 @@ class PageRepository extends BaseRepository implements PageRepositoryInterface
      */
     public function getPage($var)
     {
-        return $this->findBySlug($var);
+        return $this->findBySlug($var)->toArray();
+    }
+
+    /**
+     * Get page by id or slug.
+     *
+     * @return void
+     */
+    public function presenter()
+    {
+        return PageItemPresenter::class;
     }
 }

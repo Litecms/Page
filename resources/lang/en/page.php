@@ -1,83 +1,103 @@
 <?php
 
 return [
-    'name'        => 'Page',
-    'names'       => 'Pages',
-    'options'     => [
-        'view' => ['default' => 'Default', 'left' => 'Left Menu', 'right' => 'Right Menu'],
-        'compile' => ['0' => 'No', '1' => 'Yes'],
-        'status' => ['0' => 'Hide', '1' => 'Show'],
-        'category' => ['default' => 'Default'],
-    ],
-    'label'       => [
-        'name'             => 'Name',
-        'title'            => 'Title',
-        'heading'          => 'Heading',
-        'sub_heading'      => 'Sub heading',
-        'abstract'         => 'Abstract',
-        'content'          => 'Content',
-        'meta_title'       => 'Meta title',
-        'meta_keyword'     => 'Meta keyword',
-        'meta_description' => 'Meta description',
-        'banner'           => 'Banner',
-        'images'           => 'Images',
-        'compile'          => 'Compile',
-        'view'             => 'View',
-        'order'            => 'Order',
-        'status'           => 'Status',
-        'status'           => 'Status',
-        'keyword'          => 'Keyword',
-        'description'      => 'Description',
-        'slug'             => 'Slug',
-        'url'              => 'Url',
-        'created_at'       => 'Created at',
-        'updated_at'       => 'Updated at',
-        'category_id'      => 'Category',
-    ],
-    'placeholder' => [
-        'name'             => 'Please enter name',
-        'title'            => 'Please enter title',
-        'description'      => 'Please enter description',
-        'heading'          => 'Please enter heading',
-        'sub_heading'      => 'Please enter sub heading',
-        'abstract'         => 'Please enter abstract / summary text for the page',
-        'content'          => 'Please enter content',
-        'meta_title'       => 'Please enter meta title',
-        'meta_keyword'     => 'Please enter meta keyword',
-        'meta_description' => 'Please enter meta description',
-        'banner'           => 'Please enter banner',
-        'images'           => 'Please enter images',
-        'compile'          => 'Please select compile',
-        'view'             => 'Please select view',
-        'order'            => 'Please enter order',
-        'status'           => 'Please select status',
-        'keyword'          => 'Please enter keyword',
-        'description'      => 'Please enter description',
-        'slug'             => 'Please enter slug',
-        'category_id'      => 'Please enter category',
+    /*
+    |--------------------------------------------------------------------------
+    | Language files for page in page package
+    |--------------------------------------------------------------------------
+    |
+    | The following language lines are  for  page module in page package
+    | and it is used by the template/view files in this module
+    |
+    */
+
+    /**
+     * Singlular and plural name of the module
+     */
+    'name'          => 'Page',
+    'names'         => 'Pages',
+    
+    /**
+     * Singlular and plural name of the module
+     */
+    'title'         => [
+        'main'  => 'Pages',
+        'sub'   => 'Pages',
+        'list'  => 'List of pages',
+        'edit'  => 'Edit page',
+        'create'    => 'Create new page'
     ],
 
     /**
-     * Columns array for show hide checkbox.
+     * Singlular and plural name of the module
      */
-    'cloumns'     => [
-        'name'    => ['name' => 'Name', 'data-column' => 1, 'checked' => 'checked', 'disabled' => 'disabled'],
-        'title'   => ['name' => 'Title', 'data-column' => 2, 'checked' => 'checked'],
-        'url'     => ['name' => 'URL', 'data-column' => 3, 'checked' => 'checked', 'disabled' => 'disabled'],
-        'heading' => ['name' => 'Heading', 'data-column' => 4, 'checked' => 'checked'],
-        'order'   => ['name' => 'Order', 'data-column' => 5],
+    'groups'         => [
+        'main' => 'Main',
+        'details' => 'Details',
+        'images' => 'Images',
+        'settings' => 'Settings'
     ],
 
-    'message'     => [
-        'nopage' => 'Page not found.',
+    /**
+     * Options for select/radio/check.
+     */
+    'options'       => [
+        'status'              => ['Show','Hide'],
     ],
-    'tab'         => [
-        'page'    => 'Page',
-        'setting' => 'Setting',
-        'meta'    => 'Meta',
-        'image'   => 'Image',
+
+    /**
+     * Placeholder for inputs
+     */
+    'placeholder'   => [
+        'id'                         => 'Please enter id',
+        'name'                       => 'Please enter name',
+        'title'                      => 'Please enter title',
+        'heading'                    => 'Please enter heading',
+        'sub_heading'                => 'Please enter sub heading',
+        'abstract'                   => 'Please enter abstract',
+        'content'                    => 'Please enter content',
+        'meta_title'                 => 'Please enter meta title',
+        'meta_keyword'               => 'Please enter meta keyword',
+        'meta_description'           => 'Please enter meta description',
+        'banner'                     => 'Please enter banner',
+        'images'                     => 'Please enter images',
+        'compile'                    => 'Please enter compile',
+        'view'                       => 'Please enter view',
+        'category'                   => 'Please enter category',
+        'order'                      => 'Please enter order',
+        'slug'                       => 'Please enter slug',
+        'status'                     => 'Please select status',
+        'upload_folder'              => 'Please enter upload folder',
+        'deleted_at'                 => 'Please select deleted at',
+        'created_at'                 => 'Please select created at',
+        'updated_at'                 => 'Please select updated at',
     ],
-    'text'        => [
-        'preview' => 'Click on the below list for preview',
+
+    /**
+     * Labels for inputs.
+     */
+    'label'         => [
+        'id'                         => 'Id',
+        'name'                       => 'Name',
+        'title'                      => 'Title',
+        'heading'                    => 'Heading',
+        'sub_heading'                => 'Sub heading',
+        'abstract'                   => 'Abstract',
+        'content'                    => 'Content',
+        'meta_title'                 => 'Meta title',
+        'meta_keyword'               => 'Meta keyword',
+        'meta_description'           => 'Meta description',
+        'banner'                     => 'Banner',
+        'images'                     => 'Images',
+        'compile'                    => 'Compile',
+        'view'                       => 'View',
+        'category'                   => 'Category',
+        'order'                      => 'Order',
+        'slug'                       => 'Slug',
+        'status'                     => 'Status',
+        'upload_folder'              => 'Upload folder',
+        'deleted_at'                 => 'Deleted at',
+        'created_at'                 => 'Created at',
+        'updated_at'                 => 'Updated at',
     ],
 ];

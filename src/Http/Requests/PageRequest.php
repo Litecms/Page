@@ -3,7 +3,6 @@
 namespace Litecms\Page\Http\Requests;
 
 use Litepie\Http\Request\AbstractRequest;
-use Litecms\Page\Models\Page;
 
 class PageRequest extends AbstractRequest
 {
@@ -18,12 +17,12 @@ class PageRequest extends AbstractRequest
 
         if (is_null($this->model)) {
             // Determine if the user is authorized to access page module,
-            return $this->user()->can('view', app(Page::class));
+            return $this->user()->can('view', app(config('litecms.page.page.model.repository')));
         }
 
         if ($this->isWorkflow()) {
             // Determine if the user is authorized to change status of an entry,
-            return $this->can($this->getStatus());
+            return $this->can($this->getTransition());
         }
 
         if ($this->isCreate() || $this->isStore()) {
@@ -53,7 +52,6 @@ class PageRequest extends AbstractRequest
      */
     public function rules()
     {
-
         if ($this->isStore()) {
             // validation rule for create request.
             return [

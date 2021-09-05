@@ -1,1 +1,0 @@
-            {!!Menu::menu('main')!!}
