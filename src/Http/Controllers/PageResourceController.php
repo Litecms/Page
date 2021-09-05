@@ -2,31 +2,34 @@
 
 namespace Litecms\Page\Http\Controllers;
 
-use Litepie\Http\Controllers\ResourceController;
+use Exception;
+use Litecms\Page\Forms\Page as PageForm;
 use Litecms\Page\Http\Requests\PageRequest;
 use Litecms\Page\Interfaces\PageRepositoryInterface;
-use Litecms\Page\Models\Page;
+use Litecms\Page\Repositories\Eloquent\Filters\PageResourceFilter;
+use Litecms\Page\Repositories\Eloquent\Presenters\PageListPresenter;
+use Litepie\Http\Controllers\ResourceController as BaseController;
+use Litepie\Repository\Filter\RequestFilter;
 
 /**
  * Resource controller class for page.
  */
-class PageResourceController extends ResourceController
+class PageResourceController extends BaseController
 {
 
     /**
      * Initialize page resource controller.
      *
-     * @param type PageRepositoryInterface $page
      *
      * @return null
      */
     public function __construct(PageRepositoryInterface $page)
     {
         parent::__construct();
+        $this->form = PageForm::setAttributes()->toArray();
+        $this->modules = $this->modules(config('litecms.page.modules'), 'page', guard_url('page'));
         $this->repository = $page;
-        $this->repository
-            ->pushCriteria(\Litepie\Repository\Criteria\RequestCriteria::class)
-            ->pushCriteria(\Litecms\Page\Repositories\Criteria\PageResourceCriteria::class);
+
     }
 
     /**
@@ -36,18 +39,22 @@ class PageResourceController extends ResourceController
      */
     public function index(PageRequest $request)
     {
-        $pageLimit = $request->input('pageLimit', 10);
+
+        $pageLimit = $request->input('pageLimit', config('database.pagination.limit'));
         $data = $this->repository
-            ->setPresenter(\Litecms\Page\Repositories\Presenter\PageListPresenter::class)
-            ->paginate($pageLimit);
+            ->pushFilter(RequestFilter::class, $request->all())
+            ->pushFilter(PageResourceFilter::class, $request->all())
+            ->setPresenter(PageListPresenter::class)
+            ->simplePaginate($pageLimit)
+            ->toArray();
+
         extract($data);
-        $view = 'page::page.index';
-        if ($request->ajax()) {
-            $view = 'page::page.more';
-        }
+        $form = $this->form;
+        $modules = $this->modules;
+
         return $this->response->setMetaTitle(trans('page::page.names'))
-            ->view($view)
-            ->data(compact('data', 'meta'))
+            ->view('page::page.index')
+            ->data(compact('data', 'meta', 'links', 'modules', 'form'))
             ->output();
     }
 
@@ -59,19 +66,15 @@ class PageResourceController extends ResourceController
      *
      * @return Response
      */
-    public function show(PageRequest $request, Page $data)
+    public function show(PageRequest $request, PageRepositoryInterface $repository)
     {
-
-        if ($data->exists) {
-            $view = 'page::page.show';
-        } else {
-            $view = 'page::page.new';
-        }
-
+        $form = $this->form;
+        $modules = $this->modules;
+        $data = $repository->toArray();
         return $this->response
             ->setMetaTitle(trans('app.view') . ' ' . trans('page::page.name'))
-            ->data(compact('data'))
-            ->view($view)
+            ->data(compact('data', 'form', 'modules', 'form'))
+            ->view('page::page.show')
             ->output();
     }
 
@@ -82,14 +85,14 @@ class PageResourceController extends ResourceController
      *
      * @return Response
      */
-    public function create(PageRequest $request)
+    public function create(PageRequest $request, PageRepositoryInterface $repository)
     {
-
-        $data = $this->repository->newInstance([]);
-        return $this->response
-            ->setMetaTitle(trans('app.new') . ' ' . trans('page::page.name'))
-            ->view('page::page.create', true)
-            ->data(compact('data'))
+        $form = $this->form;
+        $modules = $this->modules;
+        $data = $repository->toArray();
+        return $this->response->setMetaTitle(trans('app.new') . ' ' . trans('page::page.name'))
+            ->view('page::page.create')
+            ->data(compact('data', 'form', 'modules'))
             ->output();
     }
 
@@ -100,28 +103,26 @@ class PageResourceController extends ResourceController
      *
      * @return Response
      */
-    public function store(PageRequest $request)
+    public function store(PageRequest $request, PageRepositoryInterface $repository)
     {
         try {
-            $attribute = $request->all();
-            $attribute['user_id'] = user_id();
-            $attribute['user_type'] = user_type();
-            $data = $this->repository
-                ->setPresenter(\Litecms\Page\Repositories\Presenter\PageShowPresenter::class)
-                ->create($attribute);
-            $data = current($data);
+            $attributes = $request->all();
+            $attributes['user_id'] = user_id();
+            $attributes['user_type'] = user_type();
+            $repository->create($attributes);
+            $data = $repository->toArray();
+
             return $this->response->message(trans('messages.success.created', ['Module' => trans('page::page.name')]))
                 ->code(204)
-                ->status('success')
                 ->data(compact('data'))
+                ->status('success')
                 ->url(guard_url('page/page/' . $data['id']))
                 ->redirect();
         } catch (Exception $e) {
             return $this->response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->data(compact('data'))
-                ->url(guard_url('page/page'))
+                ->url(guard_url('/page/page'))
                 ->redirect();
         }
 
@@ -135,11 +136,15 @@ class PageResourceController extends ResourceController
      *
      * @return Response
      */
-    public function edit(PageRequest $request, Page $data)
+    public function edit(PageRequest $request, PageRepositoryInterface $repository)
     {
+        $form = $this->form;
+        $modules = $this->modules;
+        $data = $repository->toArray();
+
         return $this->response->setMetaTitle(trans('app.edit') . ' ' . trans('page::page.name'))
             ->view('page::page.edit')
-            ->data(compact('data'))
+            ->data(compact('data', 'form', 'modules'))
             ->output();
     }
 
@@ -151,28 +156,23 @@ class PageResourceController extends ResourceController
      *
      * @return Response
      */
-    public function update(PageRequest $request, Page $page)
+    public function update(PageRequest $request, PageRepositoryInterface $repository)
     {
         try {
-            $attribute = $request->all();
-            $data = $this->repository
-                ->setPresenter(\Litecms\Page\Repositories\Presenter\PageShowPresenter::class)
-                ->update($attribute, $page->getRouteKey());
-            $data = current($data);
-            return $this->response
-                ->message(trans('messages.success.updated', ['Module' => trans('page::page.name')]))
+            $attributes = $request->all();
+            $repository->update($attributes);
+            $data = $repository->toArray();
+            return $this->response->message(trans('messages.success.updated', ['Module' => trans('page::page.name')]))
                 ->code(204)
-                ->data(compact('data'))
                 ->status('success')
-                ->url(guard_url('page/page/' . $page->getRouteKey()))
+                ->data(compact('data'))
+                ->url(guard_url('page/page/' . $data['id']))
                 ->redirect();
         } catch (Exception $e) {
-            return $this->response
-                ->message($e->getMessage())
-                ->data(compact('data'))
+            return $this->response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(guard_url('page/page/' . $page->getRouteKey()))
+                ->url(guard_url('page/page/' . $data['id']))
                 ->redirect();
         }
 
@@ -185,15 +185,17 @@ class PageResourceController extends ResourceController
      *
      * @return Response
      */
-    public function destroy(PageRequest $request, Page $page)
+    public function destroy(PageRequest $request, PageRepositoryInterface $repository)
     {
         try {
+            $repository->delete();
+            $data = $repository->toArray();
 
-            $page->delete();
             return $this->response->message(trans('messages.success.deleted', ['Module' => trans('page::page.name')]))
                 ->code(202)
                 ->status('success')
-                ->url(guard_url('page/page/'. $page->getRouteKey()))
+                ->data(compact('data'))
+                ->url(guard_url('page/page/0'))
                 ->redirect();
 
         } catch (Exception $e) {
@@ -201,87 +203,9 @@ class PageResourceController extends ResourceController
             return $this->response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(guard_url('page/page/' . $page->getRouteKey()))
+                ->url(guard_url('page/page/' . $data['id']))
                 ->redirect();
         }
 
-    }
-
-    /**
-     * Remove multiple page.
-     *
-     * @param Model   $page
-     *
-     * @return Response
-     */
-    public function delete(PageRequest $request, $type)
-    {
-        try {
-            $ids = hashids_decode($request->input('ids'));
-
-            if ($type == 'purge') {
-                $this->repository->purge($ids);
-            } else {
-                $this->repository->delete($ids);
-            }
-
-            return $this->response->message(trans('messages.success.deleted', ['Module' => trans('page::page.name')]))
-                ->status("success")
-                ->code(202)
-                ->url(guard_url('page/page'))
-                ->redirect();
-
-        } catch (Exception $e) {
-
-            return $this->response->message($e->getMessage())
-                ->status("error")
-                ->code(400)
-                ->url(guard_url('page/page'))
-                ->redirect();
-        }
-
-    }
-
-    /**
-     * Restore deleted pages.
-     *
-     * @param Model   $page
-     *
-     * @return Response
-     */
-    public function restore(PageRequest $request)
-    {
-        try {
-            $ids = hashids_decode($request->input('ids'));
-            $this->repository->restore($ids);
-
-            return $this->response->message(trans('messages.success.restore', ['Module' => trans('page::page.name')]))
-                ->status("success")
-                ->code(202)
-                ->url(guard_url('page/page'))
-                ->redirect();
-
-        } catch (Exception $e) {
-
-            return $this->response->message($e->getMessage())
-                ->status("error")
-                ->code(400)
-                ->url(guard_url('page/page/'))
-                ->redirect();
-        }
-
-    }
-
-    /**
-     * Return the form elements in the for of json.
-     *
-     * @param String   $element
-     *
-     * @return json
-     */
-    public function form($element = 'fields')
-    {
-        $form = new \Litecms\Page\Form\Page();
-        return $form->form($element, true);
     }
 }

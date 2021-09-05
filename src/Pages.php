@@ -3,25 +3,24 @@
 namespace Litecms\Page;
 
 use View;
+use Litecms\Page\Interfaces\PageRepositoryInterface;
 
 /**
  *
  */
-class Page
+class Pages
 {
-    // Page modal
-    protected $model;
+    /**
+     * $page object.
+     */
+    protected $page;
 
     /**
-     * Initialize page facade.
-     *
-     * @param type \Litecms\Page\Interfaces\PageRepositoryInterface $page
-     *
-     * @return none
+     * Constructor.
      */
-    public function __construct(\Litecms\Page\Interfaces\PageRepositoryInterface $page)
+    public function __construct(PageRepositoryInterface $page)
     {
-        $this->model = $page;
+        $this->page = $page;
     }
 
     /**
@@ -34,7 +33,7 @@ class Page
      */
     public function __call($name, $arguments)
     {
-        return $this->model->$name($arguments[0]);
+        return $this->page->$name($arguments[0]);
     }
 
     /**
@@ -44,7 +43,7 @@ class Page
      */
     public function gadget($perpage = 10)
     {
-        $data['pages'] = $this->model->paginate($perpage);
+        $data['pages'] = $this->page->paginate($perpage);
 
         return View::make('page::admin.page.gadget', $data);
     }
@@ -59,7 +58,7 @@ class Page
      */
     public function pages($idslug, $field)
     {
-        $page = $this->model->getPage($idslug);
+        $page = $this->page->getPage($idslug);
 
         return $page[$field];
     }
@@ -72,9 +71,9 @@ class Page
      *
      * @return mixed
      */
-    public function page($idslug)
+    public function getPage($idslug)
     {
-        return  $this->model->getPage($idslug);
+        return  $this->page->getPage($idslug);
     }
 
     /**
@@ -86,6 +85,6 @@ class Page
      */
     public function count(array $filters = null)
     {
-        return  $this->model->count();
+        return  $this->page->count();
     }
 }

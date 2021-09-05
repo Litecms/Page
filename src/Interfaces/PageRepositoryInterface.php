@@ -2,6 +2,8 @@
 
 namespace Litecms\Page\Interfaces;
 
-interface PageRepositoryInterface
+use Litepie\Repository\Interfaces\RepositoryInterface;
+
+interface PageRepositoryInterface extends RepositoryInterface
 {
 }

@@ -1,5 +1,5 @@
 <div class="content-area">
   <div class="container">
-    {!!$page->content!!}
+    {!!$page['content']!!}
   </div>
 </div>
