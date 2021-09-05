@@ -3,7 +3,7 @@
 namespace Litecms\Page\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
-use Litecms\Page\Models\Page;
+use Litecms\Page\Interfaces\PageRepositoryInterface;
 use Request;
 use Route;
 
@@ -21,7 +21,7 @@ class RouteServiceProvider extends ServiceProvider
     /**
      * Define your route model bindings, pattern filters, etc.
      *
-     * @param  \Illuminate\Routing\Router  $router
+     * @param   \Illuminate\Routing\Router  $router
      * @return void
      */
     public function boot()
@@ -29,9 +29,9 @@ class RouteServiceProvider extends ServiceProvider
         parent::boot();
 
         if (Request::is('*/page/page/*')) {
-            Route::bind('page', function ($id) {
-                $page = $this->app->make(\Litecms\Page\Interfaces\PageRepositoryInterface::class);
-                return $page->findOrNew($id);
+            Route::bind('page', function ($page) {
+                $pageRepo = $this->app->make(PageRepositoryInterface::class);
+                return $pageRepo->findOrNew($page);
             });
         }
 
@@ -46,9 +46,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         $this->mapWebRoutes();
 
-        $this->mapApiRoutes();
-
-        //
+        // $this->mapApiRoutes();
     }
 
     /**
@@ -60,14 +58,12 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes()
     {
-
         Route::group([
             'middleware' => 'web',
             'namespace' => $this->namespace,
         ], function ($router) {
             require (__DIR__ . '/../../routes/web.php');
         });
-
     }
 
     /**
@@ -79,11 +75,10 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapApiRoutes()
     {
-
         Route::group([
             'middleware' => 'api',
-            'prefix' => 'api',
             'namespace' => $this->namespace,
+            'prefix' => 'api',
         ], function ($router) {
             require (__DIR__ . '/../../routes/api.php');
         });
