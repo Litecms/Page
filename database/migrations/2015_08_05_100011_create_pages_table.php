@@ -47,6 +47,6 @@ class CreatePagesTable extends Migration
      */
     public function down()
     {
-        Schema::drop(config('litecms.page.page.table'));
+        Schema::drop(config('litecms.page.page.model.table'));
     }
 }
