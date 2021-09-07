@@ -21,7 +21,7 @@
   "autoload": {
     "psr-4": {
       "Litecms\\Page\\": "src",
-      "Litecms\\Page\\Seeds": "database/seeds"
+      "Litecms\\Page\\Seeds\\": "database/seeds"
     }
   },
   "extra": {
