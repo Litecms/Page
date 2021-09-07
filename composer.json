@@ -16,14 +16,12 @@
   ],
   "require": {
     "php": "^7.3|^8.0",
-    "composer/installers": "~1.9"
+    "composer/installers": "~2.0"
   },
   "autoload": {
-    "classmap": [
-      "database/seeds"
-    ],
     "psr-4": {
-      "Litecms\\Page\\": "/src"
+      "Litecms\\Page\\": "src",
+      "Litecms\\Page\\Seeds": "database/seeds"
     }
   },
   "extra": {
