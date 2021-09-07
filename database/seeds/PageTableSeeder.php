@@ -1,8 +1,10 @@
 <?php
 
+namespace Litecms\Page\Seeds;
+
 use Illuminate\Database\Seeder;
 
-class LitecmsPageTableSeeder extends Seeder
+class PageTableSeeder extends Seeder
 {
     public function run()
     {
