@@ -2,13 +2,14 @@
 
 namespace Litecms\Page\Seeds;
 
+use DB;
 use Illuminate\Database\Seeder;
 
 class PageTableSeeder extends Seeder
 {
     public function run()
     {
-        DB::table(config('litecms.page.page.table'))->insert([
+        DB::table(config('litecms.page.page.model.table'))->insert([
 
             [
                 'id'               => 1,

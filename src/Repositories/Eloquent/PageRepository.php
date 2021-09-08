@@ -12,7 +12,7 @@ class PageRepository extends BaseRepository implements PageRepositoryInterface
     public function boot()
     {
         // $this->pushFilter(RequestFilter::class);
-        $this->fieldSearchable = config('litecms.page.page.search');
+        $this->fieldSearchable = config('litecms.page.page.model.search');
 
     }
 
