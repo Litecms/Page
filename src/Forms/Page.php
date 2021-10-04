@@ -52,6 +52,11 @@ class Page extends FormInterpreter
                 "roles" => [],
             ]
         ];
+        self::$orderBy = [
+            'created_at' => trans('blog::blog.label.created_at'),
+            'name' => trans('blog::blog.label.title'),
+            'status' => trans('blog::blog.label.status'),
+        ];
         self::$groups = [
             'main' => trans('page::page.groups.main'),
             'details' => trans('page::page.groups.details'),
