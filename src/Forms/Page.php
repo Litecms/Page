@@ -186,7 +186,7 @@ class Page extends FormInterpreter
                 ],
             ],
             'content' => [
-                "element" => 'input',
+                "element" => 'html_editor',
                 "type" => 'html_editor',
                 "label" => trans('page::page.label.content'),
                 "placeholder" => trans('page::page.placeholder.content'),
