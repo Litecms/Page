@@ -29,6 +29,7 @@ class PageResourceController extends BaseController
         $this->form = PageForm::setAttributes()->toArray();
         $this->modules = $this->modules(config('litecms.page.modules'), 'page', guard_url('page'));
         $this->repository = $page;
+
     }
 
     /**
@@ -38,6 +39,7 @@ class PageResourceController extends BaseController
      */
     public function index(PageRequest $request)
     {
+
         $pageLimit = $request->input('pageLimit', config('database.pagination.limit'));
         $data = $this->repository
             ->pushFilter(RequestFilter::class, $request->all())
