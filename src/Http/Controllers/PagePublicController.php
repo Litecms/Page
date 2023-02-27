@@ -2,22 +2,43 @@
 
 namespace Litecms\Page\Http\Controllers;
 
-use Litepie\Http\Controllers\PublicController as BaseController;
-use Litecms\Page\Interfaces\PageRepositoryInterface;
+use App\Http\Controllers\PublicController as BaseController;
+use App\Http\Requests\PublicRequest;
+use Litepie\Database\RequestScope;
+use Litecms\Page\Http\Resources\PageResource;
+use Litecms\Page\Http\Resources\PagesCollection;
+use Litecms\Page\Scopes\PagePublicScope;
+use Litecms\Page\Models\Page;
 
 class PagePublicController extends BaseController
 {
-    /**
-     * Constructor.
-     *
-     * @return type
-     */
-    public function __construct(PageRepositoryInterface $page)
-    {
-        parent::__construct();
-        $this->modules = $this->modules(config('litecms.page.modules'), 'page', guard_url('page'));
-        $this->repository = $page;
 
+    /**
+     * Show page's list.
+     *
+     * @return response
+     */
+    protected function index(PublicRequest $request)
+    {
+
+        $search = $request->search;
+        $pageLimit = $request->input('pageLimit', config('database.pagination.limit'));
+        $page = Page::pushScope(new RequestScope())
+            ->pushScope(new PagePublicScope())
+            ->select('pages.*')
+            ->paginate($pageLimit)
+            ->withQueryString();
+
+        $data = new PagesCollection($page);
+
+        $categories = [];
+        $tags = [];
+        $recent = [];
+
+        return $this->response->setMetaTitle(trans('page::page.names'))
+            ->view('page::public.page.index')
+            ->data(compact('data', 'categories', 'tags', 'recent'))
+            ->output();
     }
 
     /**
@@ -27,31 +48,19 @@ class PagePublicController extends BaseController
      *
      * @return response
      */
-    protected function getPage($slug)
+    protected function show(PublicRequest $request, $slug)
     {
-        // get page by slug
-        $page = $this->repository->getPage($slug);
-        
-        if (is_null($page)) {
-            abort(404);
-        }
+        $model = Page::findBySlug($slug);
+        $data = new PageResource($model);
 
-        //Set theme variables
-        $view = $page['view'];
-        $view = view()->exists('page::' . $view) ? $view : 'default';
-
-        if ($page['compile']) {
-            $page['content'] = blade_compile($page['content']);
-        }
-
-        return $this->response
-            ->setMetaKeyword(strip_tags($page['meta_keyword']))
-            ->setMetaDescription(strip_tags($page['meta_description']))
-            ->setMetaTitle(strip_tags($page['meta_title']))
-            ->view('page::public.' . $view)
-            ->data(compact('page'))
+        $categories = [];
+        $tags = [];
+        $recent = [];
+    
+        return $this->response->setMetaTitle($data['title'] . trans('page::page.name'))
+            ->view('page::public.page.show')
+            ->data(compact('data', 'categories', 'tags', 'recent'))
             ->output();
-
     }
 
 }

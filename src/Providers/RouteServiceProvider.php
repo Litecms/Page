@@ -3,7 +3,9 @@
 namespace Litecms\Page\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
-use Litecms\Page\Interfaces\PageRepositoryInterface;
+
+use Litecms\Page\Models\Page;
+
 use Request;
 use Route;
 
@@ -28,10 +30,10 @@ class RouteServiceProvider extends ServiceProvider
     {
         parent::boot();
 
+        
         if (Request::is('*/page/page/*')) {
             Route::bind('page', function ($page) {
-                $pageRepo = $this->app->make(PageRepositoryInterface::class);
-                return $pageRepo->findOrNew($page);
+                return Page::findorNew($page);
             });
         }
 
@@ -46,7 +48,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         $this->mapWebRoutes();
 
-        // $this->mapApiRoutes();
+        $this->mapApiRoutes();
     }
 
     /**
@@ -57,10 +59,10 @@ class RouteServiceProvider extends ServiceProvider
      * @return void
      */
     protected function mapWebRoutes()
-    {
+    {   
         Route::group([
             'middleware' => 'web',
-            'namespace' => $this->namespace,
+            'namespace'  => $this->namespace,
         ], function ($router) {
             require (__DIR__ . '/../../routes/web.php');
         });
@@ -77,8 +79,8 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::group([
             'middleware' => 'api',
-            'namespace' => $this->namespace,
-            'prefix' => 'api',
+            'namespace'  => $this->namespace,
+            'prefix'     => 'api',
         ], function ($router) {
             require (__DIR__ . '/../../routes/api.php');
         });

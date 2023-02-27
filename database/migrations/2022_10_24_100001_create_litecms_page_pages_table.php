@@ -1,22 +1,25 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
 
-class CreatePagesTable extends Migration
+class CreateLitecmsPagePagesTable extends Migration
 {
-    /**
+    /*
      * Run the migrations.
      *
      * @return void
      */
+
     public function up()
     {
 
         /*
-         * Table: pages
+         * Table: litecms_page_pages
          */
-        Schema::create(config('litecms.page.page.model.table'), function ($table) {
-            $table->increments('id')->unsigned();
+        Schema::create('litecms_page_pages', function ($table) {
+            $table->increments('id');
             $table->string('name', 100)->nullable();
             $table->text('title')->nullable();
             $table->text('heading')->nullable();
@@ -28,25 +31,27 @@ class CreatePagesTable extends Migration
             $table->text('meta_description')->nullable();
             $table->mediumText('banner')->nullable();
             $table->text('images')->nullable();
-            $table->boolean('compile')->default(false)->nullable();
-            $table->string('view', 20)->default('default')->nullable();
-            $table->string('category', 20)->default('default')->nullable();
+            $table->tinyInteger('compile')->nullable();
+            $table->string('view', 20)->nullable();
+            $table->string('category', 20)->nullable();
             $table->integer('order')->nullable();
             $table->string('slug', 200)->nullable();
-            $table->enum('status', ['Show', 'Hide'])->default('Show')->nullable();
+            $table->enum('status', ['Show', 'Hide'])->nullable();
             $table->string('upload_folder', 100)->nullable();
+            $table->text('marking', 200)->nullable();
             $table->softDeletes();
             $table->nullableTimestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
+    /*
+    * Reverse the migrations.
+    *
+    * @return void
+    */
+
     public function down()
     {
-        Schema::drop(config('litecms.page.page.model.table'));
+        Schema::drop('litecms_page_pages');
     }
 }
