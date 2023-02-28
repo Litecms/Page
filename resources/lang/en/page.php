@@ -14,18 +14,16 @@ return [
     /**
      * Singlular and plural name of the module
      */
-    'name'          => 'Page',
-    'names'         => 'Pages',
-    
+    'name' => 'Page',
+    'names' => 'Pages',
+    'icon' => 'las la-list',
+
     /**
      * Singlular and plural name of the module
      */
-    'title'         => [
-        'main'  => 'Pages',
-        'sub'   => 'Pages',
-        'list'  => 'List of pages',
-        'edit'  => 'Edit page',
-        'create'    => 'Create new page'
+    'title' => [
+        'main' => 'Pages',
+        'sub' => 'Pages'
     ],
 
     /**
@@ -33,16 +31,24 @@ return [
      */
     'groups'         => [
         'main' => 'Main',
-        'details' => 'Details',
         'images' => 'Images',
+        'details' => 'Details',
         'settings' => 'Settings'
+    ],
+
+    /**
+     * Form sub section name for the module.
+     */
+    'sections' => [
+        'main' => 'Main',
+        'details' => 'Details',
     ],
 
     /**
      * Options for select/radio/check.
      */
     'options'       => [
-        'status'              => ['Show','Hide'],
+        'status'              => [],
     ],
 
     /**
@@ -100,4 +106,6 @@ return [
         'created_at'                 => 'Created at',
         'updated_at'                 => 'Updated at',
     ],
-];
+
+    
+    ];

@@ -1,11 +1,12 @@
 <?php
 
-namespace Litecms\Page\Repositories\Eloquent\Presenters;
+namespace Litecms\Page\Http\Resources;
 
-use Litepie\Repository\Presenter\Presenter;
+use Illuminate\Http\Resources\Json\JsonResource;
 
-class PageListPresenter extends Presenter
+class PagesResource extends JsonResource
 {
+
     public function itemLink()
     {
         return guard_url('page/page') . '/' . $this->getRouteKey();
@@ -13,29 +14,33 @@ class PageListPresenter extends Presenter
 
     public function title()
     {
-        if (!isset($this->title)) {
+        if ($this->title != '') {
             return $this->title;
         }
 
-        if (!isset($this->name)) {
+        if ($this->name != '') {
             return $this->name;
         }
 
-        return 'Title column not specified';
-    }
+        return 'None';
+     }
 
-    public function toArray()
+    public function toArray($request)
     {
         return [
             'id' => $this->getRouteKey(),
             'title' => $this->title(),
             'description' => $this->description,
+            'image' => [
+                'main' => url($this->defaultImage('images', 'xs')),
+                'sub' => @$this->client->picture,
+            ],
             'status' => $this->status,
             'created_at' => !is_null($this->created_at) ? $this->created_at->format('Y-m-d H:i:s') : null,
             'updated_at' => !is_null($this->updated_at) ? $this->updated_at->format('Y-m-d H:i:s') : null,
             'meta' => [
+                'exists' => $this->exists(),
                 'link' => $this->itemLink(),
-                'trashed' => $this->trashed(),
             ],
         ];
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Litecms\Page\Seeds;
+namespace Litecms\Page\Seeders;
 
 use DB;
 use Illuminate\Database\Seeder;
@@ -39,7 +39,7 @@ class PageTableSeeder extends Seeder
                 'content'          => '<div class="section-title">
                     <h2 class="title">Our mission is to make your life beautiful.</h2>
                     <div class="right-side">
-                        <p>Lavalite (lavalite.org) is a free and open-source which can be used as a content management system (CMS), Enterprise Resource Planning (ERP) &  Customer Relationship Management (CRM) software written in Laravel and it can be pair with a wide range of databases like MySQL or MariaDB etc. Features include a package architecture and a template system.</p>
+                        <p>Lavalite (lavalite.org) is a free and open-source which can be used as a content management system (CMS), Enterprise Resource Planning (ERP) &  Customer Relationship Management (CRM) software written in Laravel and it can be pair with a wide range of databases like MySQL or MariaDB etc. Features include a package architecture and a template system.</p>
                     </div>
                 </div>
                 <div class="row">

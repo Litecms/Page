@@ -4,7 +4,7 @@ namespace Litecms\Page\Http\Requests;
 
 use Litepie\Http\Request\AbstractRequest;
 
-class PageRequest extends AbstractRequest
+class PageResourceRequest extends AbstractRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -17,7 +17,7 @@ class PageRequest extends AbstractRequest
 
         if (is_null($this->model)) {
             // Determine if the user is authorized to access page module,
-            return $this->user()->can('view', app(config('litecms.page.page.model.repository')));
+            return $this->user()->can('view', app(config('litecms.page.page.model.model')));
         }
 
         if ($this->isWorkflow()) {

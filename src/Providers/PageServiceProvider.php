@@ -1,6 +1,6 @@
 <?php
 
-namespace Litecms\Page;
+namespace Litecms\Page\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Litecms\Page\Pages;
@@ -12,7 +12,7 @@ class PageServiceProvider extends ServiceProvider
      *
      * @var bool
      */
-    protected $defer = false;
+    protected $defer = true;
 
     /**
      * Bootstrap the application events.
@@ -22,13 +22,13 @@ class PageServiceProvider extends ServiceProvider
     public function boot()
     {
         // Load view
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'page');
+        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'page');
 
         // Load translation
-        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'page');
+        $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'page');
 
         // Load migrations
-        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
 
         // Call pblish redources function
         $this->publishResources();
@@ -43,14 +43,10 @@ class PageServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfig();
-        $this->registerBindings();
         $this->registerFacade();
-        //$this->registerCommands();
 
         $this->app->register(\Litecms\Page\Providers\AuthServiceProvider::class);
         $this->app->register(\Litecms\Page\Providers\RouteServiceProvider::class);
-        // $this->app->register(\Litecms\Page\Providers\EventServiceProvider::class);
-        // $this->app->register(\Litecms\Page\Providers\WorkflowServiceProvider::class);
     }
 
     /**
@@ -66,20 +62,6 @@ class PageServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the bindings for the service provider.
-     *
-     * @return void
-     */
-    public function registerBindings() {
-                // Bind Page to repository
-        $this->app->bind(
-            'Litecms\Page\Interfaces\PageRepositoryInterface',
-            \Litecms\Page\Repositories\Eloquent\PageRepository::class
-        );
-    }
-
-
-    /**
      * Merges user's and page's configs.
      *
      * @return void
@@ -87,21 +69,16 @@ class PageServiceProvider extends ServiceProvider
     protected function mergeConfig()
     {
         $this->mergeConfigFrom(
-            __DIR__ . '/../config/config.php', 'litecms.page'
+            __DIR__ . '/../../config/config.php', 'litecms.page'
+        );
+        
+        
+        $this->mergeConfigFrom(
+            __DIR__ . '/../../config/page.php', 'litecms.page.page'
         );
     }
 
-    /**
-     * Register scaffolding command
-     */
-    protected function registerCommands()
-    {
-        if ($this->app->runningInConsole()) {
-            $this->commands([
-                \Litecms\Page\Commands\Page::class,
-            ]);
-        }
-    }
+
     /**
      * Get the services provided by the provider.
      *
@@ -120,13 +97,13 @@ class PageServiceProvider extends ServiceProvider
     private function publishResources()
     {
         // Publish configuration file
-        $this->publishes([__DIR__ . '/../config/config.php' => config_path('litecms/page.php')], 'config');
+        $this->publishes([__DIR__ . '/../../config/' => config_path('litecms/page')], 'config');
 
         // Publish admin view
-        $this->publishes([__DIR__ . '/../resources/views' => base_path('resources/views/vendor/page')], 'view');
+        $this->publishes([__DIR__ . '/../../resources/views' => base_path('resources/views/vendor/page')], 'view');
 
         // Publish language files
-        $this->publishes([__DIR__ . '/../resources/lang' => base_path('resources/lang/vendor/page')], 'lang');
+        $this->publishes([__DIR__ . '/../../resources/lang' => base_path('resources/lang/vendor/page')], 'lang');
 
         // Publish public files and assets.
         $this->publishes([__DIR__ . '/public/' => public_path('/')], 'public');
