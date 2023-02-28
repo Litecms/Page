@@ -41,7 +41,6 @@ class PageResourceController extends BaseController
      */
     public function index(PageResourceRequest $request)
     {
-
         $pageLimit = $request->input('pageLimit', config('database.pagination.limit'));
         $page = Page::pushScope(new RequestScope())
             ->pushScope(new PageResourceScope())
