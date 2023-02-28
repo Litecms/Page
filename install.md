@@ -1,12 +1,35 @@
-Lavalite package that provides page management facility for the cms.
+# Installation
 
-## Installation
+The instructions below will help you to properly installand run the generated package to the lavalite project.
 
-Run the below command form the root folder of lavalite.
+## Location
+
+Extract the package contents to the folder 
+
+`/packages/litecms/page/`
+
+## Composer
+
+Add the below entries in the `composer.json`.
+
+
+```json
+
+...
+     "repositories": {
+        ...
+
+        {
+            "type": "path",
+            "url": "packages/litecms/page"
+        }
+
+        ...
+    },
+...
 
 ```
-    composer require "litecms/page"
-```
+Then run `composer require litecms/page`
 
 
 ## Migration and seeds
@@ -31,9 +54,7 @@ Run the below command form the root folder of lavalite.
     php artisan vendor:publish --provider="Litecms\Page\Providers\PageServiceProvider" --tag="view"
 ```
 
-
 ## URLs and APIs
-
 
 ### Web Urls
 

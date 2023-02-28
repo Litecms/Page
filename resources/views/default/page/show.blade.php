@@ -1,4 +1,4 @@
-@if($data['meta']['exists'] != false)
+@if(isset($data['id']) && $data['id'] != '')
 <div class="app-entry-form-wrap">
     <div class="app-sec-title app-sec-title-with-icon app-sec-title-with-action">
         <a href="#" class="mobile-back-btn"><i class="las la-arrow-left"></i></a>
@@ -8,7 +8,7 @@
             <div class="action-buttons">
                 <button type="button" class="btn btn-with-icon btn-link" data-action='EDIT' data-load-to="#app-entry"
                     data-url="{!!guard_url('page/page')!!}/{!!$data['id']!!}/edit"><i
-                        class="las la-save"></i>{!!__('Edit')!!}</button>
+                        class="las la-save"></i>Edit</button>
                 <button type="button" class="btn btn-with-icon btn-link" data-action='DELETE' data-load-to="#app-entry"
                     data-list="#item-list" data-url="{!!guard_url('page/page')!!}/{!!$data['id']!!}"><i
                         class="las la-trash"></i>{!!__('Delete')!!}</button>
@@ -21,22 +21,38 @@
             </div>
         </div>
     </div>
-    {!!Form::vertical_open()
-    ->id('app-form-show')
-    ->class('app-form-show')
-    ->method('PUT')
-    ->action(guard_url('page/page'. $data['id']))!!}
 
-    @include('page::page.partial.entry', ['mode' => 'show'])
+    <div class="container-fluid">
+        <div class="row">
+        <div class="col-lg-8 entry-form">
+            {!!Form::vertical_open()
+            ->id('app-form-show')
+            ->class('app-form-show')
+            ->method('PUT')
+            ->action(guard_url('page/page'. $data['id']))!!}
 
-    {!!Form::close()!!}
+            @php
+            $data = form_merge_form($form['fields'], compact('data', 'meta'), true);
+            $form = $data['form'];
+            $mode = 'show';
+            @endphp
+
+            @include('page::page.partials.form')
+
+            {!!Form::close()!!}
+        </div>
+
+            @include('page::page.partials.aside')
+        </div>
+    </div>
+
 </div>
 @else
 <div class="app-entry-form-wrap" style="height:auto;">
     <div class="app-sec-title app-sec-title-with-icon app-sec-title-with-action">
         <a href="#" class="mobile-back-btn"><i class="las la-arrow-left"></i></a>
         <i class="las la-list app-sec-title-icon"></i>
-        <h2>{!!__('Deleted')!!}</h2>
+        <h2>{!!__('New')!!}</h2>
     </div>
 </div>
 <div class="app-detail-empty">

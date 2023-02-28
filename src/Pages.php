@@ -3,7 +3,7 @@
 namespace Litecms\Page;
 
 use View;
-use Litecms\Page\Interfaces\PageRepositoryInterface;
+use Litecms\Page\Models\Page;
 
 /**
  *
@@ -18,9 +18,9 @@ class Pages
     /**
      * Constructor.
      */
-    public function __construct(PageRepositoryInterface $page)
+    public function __construct()
     {
-        $this->page = $page;
+        $this->page = new Page();
     }
 
     /**
@@ -51,14 +51,14 @@ class Pages
     /**
      * Return return field value of a page.
      *
-     * @param mixed  $idslug
+     * @param mixed  $slug
      * @param string $field
      *
      * @return string
      */
-    public function pages($idslug, $field)
+    public function pages($slug, $field)
     {
-        $page = $this->page->getPage($idslug);
+        $page = $this->page->findBySlug($slug);
 
         return $page[$field];
     }
@@ -66,14 +66,14 @@ class Pages
     /**
      * Returns page object.
      *
-     * @param mixed  $idslug
+     * @param mixed  $slug
      * @param string $field
      *
      * @return mixed
      */
-    public function getPage($idslug)
+    public function getPage($slug)
     {
-        return  $this->page->getPage($idslug);
+        return  $this->page->findBySlug($slug);
     }
 
     /**
