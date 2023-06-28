@@ -30,9 +30,9 @@
             ->method('POST')
             ->files('true')
             ->action(guard_url('page/page'))!!}
+            
             @php
-            $data = form_merge_form($form['fields'], compact('data', 'meta'), true);
-            $form = $data['form'];
+            $form['fields'] = form_merge_form($form['fields'], compact('data', 'meta'));
             $mode = 'create';
             @endphp
 
