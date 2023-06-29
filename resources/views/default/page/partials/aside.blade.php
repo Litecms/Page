@@ -2,12 +2,10 @@
     <aside class="app-create-steps">
         <h5 class="steps-header">{!!__('Steps')!!}</h5>
         <div class="steps-wrap" id="steps_nav">
-            @foreach($form as $key => $value)
-            <a class="step-item active" href="#{!!$key!!}"><span>{!!$loop->index+1!!}</span> {!!$key!!} </a>
+            @foreach($form['fields'] as $key => $value)
+            <a class="step-item active" href="#{!!$key!!}"><span>{!!$loop->index+1!!}</span> {!!$form['groups'][$key]['name']!!} </a>
             @endforeach
         </div>
     </aside>
     <br />
-    @if($mode == 'show')
-        @endif
 </div>

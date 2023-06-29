@@ -3,15 +3,14 @@
 namespace Litecms\Page\Http\Controllers;
 
 use Exception;
-use Litepie\Http\Controllers\ResourceController as BaseController;
-use Litepie\Database\RequestScope;
+use Litecms\Page\Actions\PageAction;
+use Litecms\Page\Actions\PageActions;
 use Litecms\Page\Forms\Page as PageForm;
 use Litecms\Page\Http\Requests\PageResourceRequest;
 use Litecms\Page\Http\Resources\PageResource;
 use Litecms\Page\Http\Resources\PagesCollection;
 use Litecms\Page\Models\Page;
-use Litecms\Page\Scopes\PageResourceScope;
-
+use Litepie\Http\Controllers\ResourceController as BaseController;
 
 /**
  * Resource controller class for page.
@@ -28,10 +27,13 @@ class PageResourceController extends BaseController
     public function __construct()
     {
         parent::__construct();
-        $this->form = PageForm::grouped(false)
-                        ->setAttributes()
-                        ->toArray();
-        $this->modules = $this->modules(config('litecms.page.modules'), 'page', guard_url('page'));
+        $this->middleware(function ($request, $next) {
+            $this->form = PageForm::grouped(false)
+                ->setAttributes()
+                ->toArray();
+            $this->modules = $this->modules(config('litecms.page.modules'), 'page', guard_url('page'));
+            return $next($request);
+        });
     }
 
     /**
@@ -41,10 +43,8 @@ class PageResourceController extends BaseController
      */
     public function index(PageResourceRequest $request)
     {
-        $pageLimit = $request->input('pageLimit', config('database.pagination.limit'));
-        $page = Page::pushScope(new RequestScope())
-            ->pushScope(new PageResourceScope())
-            ->paginate($pageLimit);
+        $request = $request->all();
+        $page = PageActions::run('paginate', $request);
 
         $data = new PagesCollection($page);
 
@@ -71,6 +71,7 @@ class PageResourceController extends BaseController
         $form = $this->form;
         $modules = $this->modules;
         $data = new PageResource($model);
+// dd($this->form);
         return $this->response
             ->setMetaTitle(trans('app.view') . ' ' . trans('page::page.name'))
             ->data(compact('data', 'form', 'modules'))
@@ -107,10 +108,8 @@ class PageResourceController extends BaseController
     public function store(PageResourceRequest $request, Page $model)
     {
         try {
-            $attributes = $request->all();
-            $attributes['user_id'] = user_id();
-            $attributes['user_type'] = user_type();
-            $model = $model->create($attributes);
+            $request = $request->all();
+            $model = PageAction::run('store', $model, $request);
             $data = new PageResource($model);
             return $this->response->message(trans('messages.success.created', ['Module' => trans('page::page.name')]))
                 ->code(204)
@@ -161,8 +160,8 @@ class PageResourceController extends BaseController
     public function update(PageResourceRequest $request, Page $model)
     {
         try {
-            $attributes = $request->all();
-            $model->update($attributes);
+            $request = $request->all();
+            $model = PageAction::run('update', $model, $request);
             $data = new PageResource($model);
 
             return $this->response->message(trans('messages.success.updated', ['Module' => trans('page::page.name')]))
@@ -175,7 +174,7 @@ class PageResourceController extends BaseController
             return $this->response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(guard_url('page/page/' .  $model->getRouteKey()))
+                ->url(guard_url('page/page/' . $model->getRouteKey()))
                 ->redirect();
         }
 
@@ -191,7 +190,9 @@ class PageResourceController extends BaseController
     public function destroy(PageResourceRequest $request, Page $model)
     {
         try {
-            $model->delete();
+
+            $request = $request->all();
+            $model = PageAction::run('destroy', $model, $request);
             $data = new PageResource($model);
 
             return $this->response->message(trans('messages.success.deleted', ['Module' => trans('page::page.name')]))
@@ -206,7 +207,7 @@ class PageResourceController extends BaseController
             return $this->response->message($e->getMessage())
                 ->code(400)
                 ->status('error')
-                ->url(guard_url('page/page/' .  $model->getRouteKey()))
+                ->url(guard_url('page/page/' . $model->getRouteKey()))
                 ->redirect();
         }
 

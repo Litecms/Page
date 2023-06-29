@@ -25,7 +25,6 @@ class PagePublicController extends BaseController
         $pageLimit = $request->input('pageLimit', config('database.pagination.limit'));
         $page = Page::pushScope(new RequestScope())
             ->pushScope(new PagePublicScope())
-            ->select('pages.*')
             ->paginate($pageLimit)
             ->withQueryString();
 
@@ -50,16 +49,23 @@ class PagePublicController extends BaseController
      */
     protected function show(PublicRequest $request, $slug)
     {
-        $model = Page::findBySlug($slug);
-        $data = new PageResource($model);
+        $page = Page::findBySlug($slug);
+        
+        if (is_null($page)) {
+            abort(404);
+        }
 
-        $categories = [];
-        $tags = [];
-        $recent = [];
+        //Set theme variables
+        $view = 'public.page.' . $page['view'];
+        $view = view()->exists('page::public.' . $view) ? $view : 'default';
+
+        if ($page['compile']) {
+            $page['content'] = blade_compile($page['content']);
+        }
     
-        return $this->response->setMetaTitle($data['title'] . trans('page::page.name'))
-            ->view('page::public.page.show')
-            ->data(compact('data', 'categories', 'tags', 'recent'))
+        return $this->response->setMetaTitle($page['title'] . trans('page::page.name'))
+            ->view('page::public.' . $view)
+            ->data(compact('page'))
             ->output();
     }
 

@@ -32,8 +32,7 @@
             ->action(guard_url('page/page'. $data['id']))!!}
 
             @php
-            $data = form_merge_form($form['fields'], compact('data', 'meta'), true);
-            $form = $data['form'];
+            $form['fields'] = form_merge_form($form['fields'], compact('data', 'meta'));
             $mode = 'show';
             @endphp
 

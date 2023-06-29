@@ -12,4 +12,4 @@ Route::prefix('{guard}/page')->group(function () {
 
 // Public routes for page
 Route::get('pages/', 'PagePublicController@index');
-Route::get('page/{slug?}', 'PagePublicController@show');
+Route::get('{slug?}.html', 'PagePublicController@show');

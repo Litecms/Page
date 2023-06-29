@@ -40,7 +40,7 @@ class PageResource extends JsonResource
             'meta_keyword' => $this->meta_keyword,
             'meta_description' => $this->meta_description,
             'banner' => $this->banner,
-            'images' => $this->images,
+            'images' => $this->images ?? [],
             'compile' => $this->compile,
             'view' => $this->view,
             'category' => $this->category,
