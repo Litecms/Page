@@ -28,7 +28,7 @@ class PageResourceController extends BaseController
     {
         parent::__construct();
         $this->middleware(function ($request, $next) {
-            $this->form = PageForm::grouped(false)
+            $this->form = PageForm::only('main')
                 ->setAttributes()
                 ->toArray();
             $this->modules = $this->modules(config('litecms.page.modules'), 'page', guard_url('page'));
@@ -50,7 +50,6 @@ class PageResourceController extends BaseController
 
         $form = $this->form;
         $modules = $this->modules;
-
         return $this->response->setMetaTitle(trans('page::page.names'))
             ->view('page::page.index')
             ->data(compact('data', 'modules', 'form'))
@@ -71,7 +70,6 @@ class PageResourceController extends BaseController
         $form = $this->form;
         $modules = $this->modules;
         $data = new PageResource($model);
-// dd($this->form);
         return $this->response
             ->setMetaTitle(trans('app.view') . ' ' . trans('page::page.name'))
             ->data(compact('data', 'form', 'modules'))

@@ -1,3 +1,4 @@
+
 @foreach($form['fields'] as $key => $fields)
 <div class="app-entry-form-section mb-10 pb-20" id="{!!$key!!}">
 <div class="section-title">{!!$form['groups'][$key]['name']!!}</div>

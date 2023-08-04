@@ -145,19 +145,19 @@ class PageTableSeeder extends Seeder
 
         DB::table('permissions')->insert([
             [
-                'slug' => 'page.page.view',
+                'slug' => 'litecms.page.page.view',
                 'name' => 'View Page',
             ],
             [
-                'slug' => 'page.page.create',
+                'slug' => 'litecms.page.page.create',
                 'name' => 'Create Page',
             ],
             [
-                'slug' => 'page.page.edit',
+                'slug' => 'litecms.page.page.edit',
                 'name' => 'Update Page',
             ],
             [
-                'slug' => 'page.page.delete',
+                'slug' => 'litecms.page.page.delete',
                 'name' => 'Delete Page',
             ],
         ]);
